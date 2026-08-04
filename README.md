@@ -42,5 +42,40 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kartos Therapeutics is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/kartos-therapeutics_stock/
+Kartos Therapeutics, Inc. is a privately held, clinical-stage biopharmaceutical company in Redwood
+City, California, developing navtemadlin (KRT-232), an oral MDM2 inhibitor that restores p53
+activity in tumours retaining wild-type TP53. Founded in 2016 by Wayne Rothbaum around an MDM2
+asset in-licensed from Amgen, its lead programme is in myelofibrosis — the Phase 3 POIESIS trial
+(NCT06479135), the Phase 1b/2 KRT-232-109 combination study (NCT04485260) and the Phase 3 BOREAS
+study (NCT03662126) — with reported activity also in acute myeloid leukaemia and Merkel cell
+carcinoma.
+
+## API surface
+
+**Kartos Therapeutics runs no developer program.** There is no developer portal, no API
+documentation, no API reference, no SDK, no CLI, no MCP server, no agent card and no webhook or
+event surface. Every `/.well-known/` path returns 404, as do `/robots.txt` and `/llms.txt`.
+
+The one machine-readable surface reachable without credentials is the **WordPress REST API** the
+site registers at [`https://kartosthera.com/wp-json`](https://kartosthera.com/wp-json) and
+advertises on every page response via the `api.w.org` `Link` header. It is catalogued here as the
+*Kartos Therapeutics Content API*. Beyond stock WordPress, it exposes two Kartos-registered custom
+post types that carry the company's real record:
+
+- `presentation` — 5 navtemadlin congress abstracts and posters, including the POIESIS Phase 3
+  study design and the BOREAS Phase 3 results, each linked to a PDF in the media library.
+- `team` — 15 executive, board and advisor records with structured job-title, credentials and
+  biography fields.
+
+The `posts` collection is registered but empty: Kartos publishes no blog and no press-release
+archive. The OpenAPI in this repo is **derived** by API Evangelist from the route index the site
+publishes, and models only the 21 operations verified to return data anonymously on 2026-08-04.
+It is not a specification Kartos Therapeutics publishes.
+
+## Links
+
+- Website — https://kartosthera.com/
+- Science — https://kartosthera.com/science/
+- Research and clinical trials — https://kartosthera.com/research/
+- Presentations and publications — https://kartosthera.com/presentations/
+- Secondary-market listing — https://forgeglobal.com/kartos-therapeutics_stock/

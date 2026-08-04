@@ -1,0 +1,139 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/kartos-therapeutics-content-openapi.yml
+note: >-
+  Entity graph derived from the WordPress REST schemas and the `_links` hypermedia block returned
+  on live anonymous responses from https://kartosthera.com/wp-json on 2026-08-04. Identifiers are
+  integer post IDs; there are no prefixed or namespaced IDs. The two entities that matter for this
+  provider are the Kartos-registered custom post types `presentation` and `team` — everything else
+  is stock WordPress.
+id_scheme:
+  type: integer
+  scope: site-wide
+  detail: >-
+    All content objects (pages, presentations, team members, media) share one auto-increment ID
+    space in the WordPress posts table, so a `presentation` and a `page` never collide.
+entities:
+- name: Page
+  collection: /wp/v2/pages
+  count: 8
+  key: id
+  natural_key: slug
+  description: A published corporate or scientific page of kartosthera.com.
+  instances: [home, science, research, presentations, advocacy, about, contact, privacy-policy]
+- name: Presentation
+  collection: /wp/v2/presentation
+  count: 5
+  key: id
+  natural_key: slug
+  description: >-
+    A navtemadlin congress abstract, poster or publication. Kartos-registered custom post type;
+    the scientific record of the company as exposed over the API.
+  fields: [title, slug, date, modified, link, acf, yoast_head_json]
+- name: TeamMember
+  collection: /wp/v2/team
+  count: 15
+  key: id
+  natural_key: slug
+  description: >-
+    An executive, board director or advisor. Kartos-registered custom post type carrying
+    structured ACF fields.
+  fields: [title, slug, acf.team-job-title, acf.team-credentials, acf.team-bio]
+- name: MediaItem
+  collection: /wp/v2/media
+  count: 62
+  key: id
+  description: >-
+    Media library asset — 21 SVG, 18 PNG, 17 JPEG and 6 PDF. The PDFs are the navtemadlin
+    congress posters referenced by Presentation records; the SVG/PNG set is largely investor and
+    partner marks plus the scientific figures used on /science/.
+- name: PostType
+  collection: /wp/v2/types
+  count: 13
+  key: slug
+  description: Registered post type descriptor, including `presentation` and `team`.
+- name: Taxonomy
+  collection: /wp/v2/taxonomies
+  count: 4
+  key: slug
+  description: category, post_tag, nav_menu, wp_pattern_category. Neither Kartos custom type is attached to one.
+- name: Term
+  collection: /wp/v2/categories, /wp/v2/tags
+  count: 1
+  key: id
+  description: One category (`uncategorized`, count 0) and zero tags.
+- name: User
+  collection: /wp/v2/users
+  count: 1
+  key: id
+  description: The single public author record (`admin`). Named people are modelled as TeamMember, not User.
+- name: Post
+  collection: /wp/v2/posts
+  count: 0
+  key: id
+  description: Registered but empty — Kartos publishes no blog and no press-release archive as posts.
+- name: SearchResult
+  collection: /wp/v2/search
+  key: id
+  description: >-
+    A lightweight projection ({id, title, url, type, subtype}) over Page and Presentation. A query
+    for `navtemadlin` returned 28 matches.
+relationships:
+- from: Page
+  to: User
+  kind: belongs_to
+  via: author
+  link_rel: author
+- from: Page
+  to: MediaItem
+  kind: has_one
+  via: featured_media
+  link_rel: wp:featuredmedia
+- from: Page
+  to: MediaItem
+  kind: has_many
+  via: _links.wp:attachment
+  link_rel: wp:attachment
+- from: Page
+  to: Page
+  kind: belongs_to
+  via: parent
+  note: Hierarchical page tree; all 8 pages are top-level on this site.
+- from: Presentation
+  to: MediaItem
+  kind: has_one
+  via: linked PDF in the rendered body
+  confidence: medium
+  note: >-
+    The relationship is real — each presentation corresponds to a PDF in the media library (e.g.
+    the POIESIS phase III poster) — but it is expressed in rendered markup rather than in a
+    structured field, because `acf` comes back empty on this post type. Not machine-resolvable
+    from the API alone.
+- from: TeamMember
+  to: MediaItem
+  kind: has_one
+  via: featured_media
+  link_rel: wp:featuredmedia
+  confidence: medium
+- from: MediaItem
+  to: Page
+  kind: belongs_to
+  via: post
+  link_rel: about
+- from: PostType
+  to: Taxonomy
+  kind: has_many
+  via: taxonomies
+  note: Empty for both `presentation` and `team`.
+- from: SearchResult
+  to: Page
+  kind: belongs_to
+  via: id + subtype
+- from: SearchResult
+  to: Presentation
+  kind: belongs_to
+  via: id + subtype
+hypermedia:
+  style: HAL-like `_links`
+  rels: [self, collection, about, author, replies, wp:featuredmedia, wp:attachment, wp:term, curies]
+  detail: Every object carries `_links`; `?_embed` inlines the embeddable relations in one round trip.

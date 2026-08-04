@@ -1,0 +1,99 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/kartos-therapeutics-content-openapi.yml
+format: wordpress-rest-error
+note: >-
+  NOT RFC 9457. The WordPress REST API returns errors as `application/json` with the envelope
+  `{code, message, data: {status}}` — there is no `type` URI, no `title`, no `detail` and no
+  `application/problem+json` media type. Every code below was observed live and anonymously
+  against https://kartosthera.com/wp-json on 2026-08-04; the codes are WordPress core / plugin
+  codes, not codes Kartos Therapeutics defines or documents. Kartos publishes no error reference.
+envelope:
+  media_type: application/json
+  fields:
+    code: Machine-readable error code string.
+    message: Human-readable message.
+    data.status: HTTP status code, repeated inside the body.
+    data.params: Present on 400 parameter-validation failures.
+    data.details: Present on 400 parameter-validation failures.
+problems:
+- status: 400
+  code: rest_invalid_param
+  title: Invalid parameter
+  detail: A query parameter failed validation (e.g. per_page above 100, or an unknown orderby value).
+  remediation: Correct the parameter to a value inside the range declared in the route index at /wp-json/.
+  source_operation: openapi/kartos-therapeutics-content-openapi.yml#listPages
+  observed: true
+- status: 400
+  code: rest_missing_callback_param
+  title: Missing required parameter
+  detail: A required query parameter was not supplied — e.g. `url` on the oEmbed endpoint.
+  remediation: Supply the required parameter.
+  source_operation: openapi/kartos-therapeutics-content-openapi.yml#getOembed
+  observed: true
+- status: 401
+  code: rest_forbidden
+  title: Authentication required
+  detail: >-
+    Returned by routes that require an authenticated WordPress user. Observed anonymously on
+    /wp/v2/settings, /wp-abilities/v1/abilities, /wp-abilities/v1/categories,
+    /wp-site-health/v1/tests/* and /yoast/v1/statistics.
+  remediation: >-
+    No public credential exists. Application passwords are issued only to existing WordPress
+    accounts on kartosthera.com; there is no developer sign-up.
+  observed: true
+- status: 401
+  code: rest_cannot_view
+  title: Not allowed to view this resource
+  detail: Observed anonymously on /wp/v2/menus, /wp/v2/menu-items, /wp/v2/menu-locations and /wp/v2/icons.
+  remediation: Authenticated request required; no public credential exists.
+  observed: true
+- status: 401
+  code: rest_cannot_view_themes
+  title: Not allowed to view themes
+  detail: Observed anonymously on /wp/v2/themes.
+  observed: true
+- status: 401
+  code: rest_cannot_view_plugins
+  title: Not allowed to manage plugins
+  detail: Observed anonymously on /wp/v2/plugins.
+  observed: true
+- status: 401
+  code: rest_block_type_cannot_view
+  title: Not allowed to manage block types
+  detail: Observed anonymously on /wp/v2/block-types.
+  observed: true
+- status: 401
+  code: rest_cannot_manage_widgets
+  title: Not allowed to manage widgets
+  detail: Observed anonymously on /wp/v2/sidebars.
+  observed: true
+- status: 401
+  code: rest_cannot_read
+  title: Not allowed to access font collections
+  detail: Observed anonymously on /wp/v2/font-collections.
+  observed: true
+- status: 401
+  code: rest_cannot_view_url_details
+  title: Not allowed to process remote URLs
+  detail: Observed anonymously on /wp-block-editor/v1/url-details.
+  observed: true
+- status: 404
+  code: rest_post_invalid_id
+  title: Invalid post ID
+  detail: No object exists with the supplied id in the requested collection.
+  remediation: List the collection first and use an id it returns.
+  source_operation: openapi/kartos-therapeutics-content-openapi.yml#getPage
+  observed: true
+- status: 404
+  code: rest_no_route
+  title: No route was found matching the URL and request method
+  detail: The path is not registered in the route index.
+  remediation: Fetch /wp-json/ and use a registered route.
+  observed: true
+- status: 404
+  code: oembed_invalid_url
+  title: Invalid oEmbed URL
+  detail: The supplied `url` does not resolve to a published kartosthera.com object.
+  source_operation: openapi/kartos-therapeutics-content-openapi.yml#getOembed
+  observed: true

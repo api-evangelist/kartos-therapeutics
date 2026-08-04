@@ -1,0 +1,100 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/kartos-therapeutics-content-openapi.yml
+note: >-
+  Kartos Therapeutics makes no published API conformance or compliance claims. Every assertion
+  below is derived from the observed behaviour of the WordPress REST API at
+  https://kartosthera.com/wp-json on 2026-08-04. No `Compliance` pointer is emitted in apis.yml:
+  the company publishes no trust center, no certification list and no compliance program page —
+  probe-security-programs.py returned vdp=none trust=none.
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: >-
+    openapi/kartos-therapeutics-content-openapi.yml is a valid OpenAPI 3.1.0 document derived by
+    API Evangelist. Kartos itself publishes no OpenAPI.
+  authored_by: api-evangelist
+- id: rest
+  conforms: true
+  evidence: Resource collections with GET semantics, HTTP status codes, JSON representations.
+- id: hateoas
+  conforms: true
+  evidence: Every object carries a HAL-style `_links` block with self/collection/about/author rels.
+- id: rfc8288-web-linking
+  conforms: true
+  evidence: Collection responses return a `Link` header with rel="next"/rel="prev".
+- id: oembed-1.0
+  conforms: true
+  evidence: /oembed/1.0/embed returns a valid oEmbed 1.0 rich response for kartosthera.com URLs.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use the WordPress envelope {code, message, data.status} with media type
+    application/json — not application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on both kartosthera.com and www.kartosthera.com.
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog returns 404.
+- id: rfc8615-well-known
+  conforms: false
+  evidence: No /.well-known/ document of any kind is served; every probed path returned 404.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 security scheme; the site advertises WordPress application passwords (HTTP Basic) only.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation headers observed; no deprecation policy published.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No event, streaming or webhook surface exists on this provider. Not applicable rather than
+    failing — nothing to publish.
+  applicable: false
+- id: a2a
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json both return 404 on every host. No
+    agent card is authored on the provider's behalf.
+- id: mcp
+  conforms: false
+  evidence: No MCP server is published or advertised.
+- id: llms-txt
+  conforms: false
+  evidence: /llms.txt returns 404. An API Evangelist-generated llms.txt is in llms/ for our own use.
+- id: robots-txt
+  conforms: false
+  evidence: >-
+    /robots.txt returns 404 — the site publishes no crawler or agent policy at all, while serving
+    API responses with X-Robots-Tag noindex.
+- id: tls-1.3
+  conforms: true
+  evidence: kartosthera.com negotiates TLSv1.3; certificate valid to 2026-12-12.
+- id: hsts
+  conforms: true
+  evidence: 'Strict-Transport-Security: max-age=31536000; includeSubDomains; preload'
+- id: dnssec
+  conforms: false
+  evidence: No DNSSEC on kartosthera.com (probe-domain-security.py, 2026-08-04).
+- id: caa
+  conforms: false
+  evidence: No CAA records on kartosthera.com.
+- id: spf
+  conforms: true
+  evidence: SPF record present on kartosthera.com.
+- id: dmarc
+  conforms: false
+  evidence: No DMARC record on kartosthera.com — a real gap for a company that publishes info@kartosthera.com.
+regulatory_context:
+  note: >-
+    Kartos Therapeutics is a clinical-stage biopharmaceutical company running interventional
+    oncology trials (POIESIS NCT06479135, KRT-232-109 NCT04485260, BOREAS NCT03662126). Its
+    regulatory obligations sit with FDA/EMA clinical conduct and ClinicalTrials.gov reporting, not
+    with an API program. The catalogued surface carries no patient data, no PHI and no
+    authenticated user data — it serves public corporate and scientific web content only.
+  hipaa_in_scope: false
+  gdpr_notice: https://kartosthera.com/privacy-policy/

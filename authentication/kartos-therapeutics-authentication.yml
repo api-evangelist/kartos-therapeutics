@@ -1,0 +1,17 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/kartos-therapeutics-content-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: applicationPassword
+  type: http
+  scheme: basic
+  description: WordPress application passwords, advertised by the site's own route index at
+    `/wp-json/` (`authentication.application-passwords.endpoints.authorization` → https://kartosthera.com/wp-admin/authorize-application.php).
+    Application passwords are issued to existing WordPress accounts only; there is no public
+    sign-up, no developer registration and no self-service credential issuance. Every operation
+    mod
+  sources:
+  - openapi/kartos-therapeutics-content-openapi.yml

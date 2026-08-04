@@ -1,0 +1,72 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Kartos Therapeutics Content API
+  version: 1.0.0
+extends: openapi/kartos-therapeutics-content-openapi.yml
+x-generated: '2026-08-04'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pipeline. Records the enhancements API Evangelist applied on top of
+  the route index Kartos Therapeutics publishes at https://kartosthera.com/wp-json/, so the
+  derived OpenAPI can be regenerated from the provider's own document without losing our work.
+actions:
+- target: $.info
+  description: Stamp the API Evangelist provenance and rating context on the derived contract.
+  update:
+    x-apievangelist-derived: true
+    x-apievangelist-source: https://kartosthera.com/wp-json/
+    x-apievangelist-verified: '2026-08-04'
+    x-provider-publishes-spec: false
+    x-provider-developer-program: false
+- target: $.info
+  description: Record that the upstream contract is defined by the WordPress project, not by Kartos.
+  update:
+    x-upstream-contract: https://developer.wordpress.org/rest-api/
+    x-upstream-version: WordPress 7.0.2
+- target: $.paths['/wp/v2/presentation'].get
+  description: >-
+    Mark the presentation collection as the provider-specific surface of scientific value — the
+    navtemadlin congress record — rather than stock WordPress.
+  update:
+    x-provider-specific: true
+    x-content-domain: clinical-science
+    x-subject: navtemadlin (KRT-232) MDM2 inhibitor congress abstracts, posters and publications
+    x-observed-count: 5
+- target: $.paths['/wp/v2/team'].get
+  description: Mark the team collection as the provider-specific corporate people surface.
+  update:
+    x-provider-specific: true
+    x-content-domain: corporate-people
+    x-structured-fields: [team-job-title, team-credentials, team-bio]
+    x-observed-count: 15
+- target: $.paths['/wp/v2/posts'].get
+  description: Record the observed emptiness of the posts collection so consumers do not plan around it.
+  update:
+    x-observed-count: 0
+    x-observed-empty: true
+- target: $.paths['/wp/v2/pages'].get
+  update:
+    x-observed-count: 8
+- target: $.paths['/wp/v2/media'].get
+  update:
+    x-observed-count: 62
+    x-observed-mime-breakdown:
+      image/svg+xml: 21
+      image/png: 18
+      image/jpeg: 17
+      application/pdf: 6
+- target: $.components.securitySchemes.applicationPassword
+  description: >-
+    Flag that the advertised credential is not obtainable by a third party, so agents do not
+    attempt an onboarding flow that does not exist.
+  update:
+    x-self-service-signup: false
+    x-public-credential-available: false
+- target: $.paths.*.get
+  description: Every catalogued operation is a safe, anonymous read.
+  update:
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      authentication: none
+      audit: not-required

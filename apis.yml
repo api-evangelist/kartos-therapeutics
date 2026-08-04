@@ -1,18 +1,97 @@
 aid: kartos-therapeutics
 name: Kartos Therapeutics
-description: 'Kartos Therapeutics is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Kartos Therapeutics, Inc. is a privately held, clinical-stage biopharmaceutical company
+  headquartered at 275 Shoreline Drive, Redwood City, California, developing navtemadlin
+  (KRT-232), an orally administered, potent and selective small-molecule inhibitor of MDM2. The
+  company was founded in 2016 by Wayne Rothbaum, president of Quogue Capital and co-founder of
+  Acerta Pharma, around an MDM2 inhibitor in-licensed from Amgen. Navtemadlin blocks the MDM2
+  protein that suppresses p53, restoring p53 function in tumours that retain wild-type TP53 and
+  driving cell-cycle arrest through p21 and apoptosis through pro-apoptotic Bcl-2 family proteins.
+  The clinical programme is centred on myelofibrosis and includes the enrolling global Phase 3
+  POIESIS trial of navtemadlin added to ruxolitinib (NCT06479135), the Phase 1b/2 KRT-232-109
+  combination study (NCT04485260), and the completed Phase 3 BOREAS study of navtemadlin versus
+  best available therapy in JAK-inhibitor relapsed or refractory myelofibrosis (NCT03662126), with
+  reported activity also in acute myeloid leukaemia and Merkel cell carcinoma. Kartos is led by
+  CEO Jesse McGreivy, MD, with Srdan Verstovsek, MD, PhD as chief medical officer, and is backed by
+  Quogue Capital, OrbiMed Advisors, Amgen, SR One, Fidelity, BlackRock, T. Rowe Price, Invus and
+  Soleus Capital. Kartos Therapeutics runs no developer program and publishes no product API, no
+  developer portal and no API documentation; the only machine-readable surface reachable without
+  credentials is the WordPress REST content API behind kartosthera.com, catalogued here.
+image: https://kartosthera.com/wp-content/uploads/2025/10/og_kartos-therapeutics.jpg
 url: https://raw.githubusercontent.com/api-evangelist/kartos-therapeutics/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enriched
 specificationVersion: '0.20'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
 - Company
-apis: []
+- biotechnology
+- pharmaceuticals
+- oncology
+- hematology
+- rare-disease
+- precision-medicine
+- clinical-trials
+- life-sciences
+- content-api
+apis:
+- aid: kartos-therapeutics:kartos-therapeutics-content-api
+  name: Kartos Therapeutics Content API
+  description: >-
+    The anonymously readable WordPress REST API behind kartosthera.com. It exposes the eight
+    published corporate and scientific pages (Home, Science, Research, Presentations &
+    Publications, Advocacy, About, Contact, Privacy Policy), two Kartos-specific custom post types
+    that carry the company's real record — `presentation` (five navtemadlin congress abstracts and
+    posters, including the POIESIS Phase 3 design and the BOREAS Phase 3 results, each linked to a
+    PDF) and `team` (fifteen executive, board and advisor bios with structured job-title,
+    credentials and biography fields) — the 62-item media library of scientific figures, investor
+    marks and presentation PDFs, the registered post types, statuses and taxonomies, the single
+    public author record, cross-content search, and the oEmbed 1.0 provider endpoint. The `posts`
+    collection is registered but empty: Kartos publishes no blog and no press-release archive as
+    posts. This is not a developer product Kartos Therapeutics markets; it is the site's own
+    content surface, registered at /wp-json/ and verified to return data without credentials. The
+    OpenAPI in this repo is derived from the published route index.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://kartosthera.com/wp-json
+  tags:
+  - content
+  - wordpress
+  - corporate
+  - science
+  - media
+  properties:
+  - type: OpenAPI
+    url: openapi/kartos-therapeutics-content-openapi.yml
+  - type: Overlay
+    url: overlays/kartos-therapeutics-content-overlay.yaml
+  - type: Authentication
+    url: authentication/kartos-therapeutics-authentication.yml
+  - type: ErrorCatalog
+    url: errors/kartos-therapeutics-problem-types.yml
+  - type: Conventions
+    url: conventions/kartos-therapeutics-conventions.yml
+  - type: DataModel
+    url: data-model/kartos-therapeutics-data-model.yml
+  x-contract-provenance: >-
+    Derived by the API Evangelist enrichment pipeline from the WordPress REST route index the site
+    publishes at https://kartosthera.com/wp-json/ — 183 routes across the namespaces oembed/1.0,
+    yoast/v1, wp/v2, wp-site-health/v1, wp-block-editor/v1 and wp-abilities/v1 — and verified
+    against live anonymous responses on 2026-08-04 (generator reported WordPress 7.0.2, PHP
+    8.3.29, nginx, hosted on Azure App Service). Only operations that returned data without
+    credentials are modelled. Notably the site registers the WordPress Abilities API
+    (`wp-abilities/v1`), an agent-facing capability registry, but its namespace index is the only
+    part readable anonymously — /wp-abilities/v1/abilities and /wp-abilities/v1/categories both
+    return 401 rest_forbidden — so no agent surface is claimed here. /wp/v2/settings, /wp/v2/menus,
+    /wp/v2/menu-items, /wp/v2/themes, /wp/v2/plugins, /wp/v2/block-types, /wp/v2/sidebars,
+    /wp/v2/templates, /wp/v2/font-collections, /wp/v2/icons and /wp-block-editor/v1/url-details all
+    return 401 anonymously. Kartos Therapeutics publishes no developer documentation, no API
+    reference, no getting-started guide and no support channel for this surface, so no
+    Documentation/APIReference/GettingStarted pointers are emitted; the humanURL above is the
+    upstream WordPress REST handbook that defines the wp/v2 contract.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +99,49 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
+  url: https://kartosthera.com/
+- type: About
+  url: https://kartosthera.com/about/
+- type: Science
+  url: https://kartosthera.com/science/
+- type: Research
+  url: https://kartosthera.com/research/
+- type: Presentations
+  url: https://kartosthera.com/presentations/
+- type: PatientResources
+  url: https://kartosthera.com/advocacy/
+- type: Contact
+  url: https://kartosthera.com/contact/
+- type: Support
+  url: https://kartosthera.com/contact/
+- type: PrivacyPolicy
+  url: https://kartosthera.com/privacy-policy/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/kartos-therapeutics
+- type: SecondaryMarket
   url: https://forgeglobal.com/kartos-therapeutics_stock/
+- type: Authentication
+  url: authentication/kartos-therapeutics-authentication.yml
+- type: Conventions
+  url: conventions/kartos-therapeutics-conventions.yml
+- type: Conformance
+  url: conformance/kartos-therapeutics-conformance.yml
+- type: ErrorCatalog
+  url: errors/kartos-therapeutics-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/kartos-therapeutics-lifecycle.yml
+- type: DataModel
+  url: data-model/kartos-therapeutics-data-model.yml
+- type: WellKnown
+  url: well-known/kartos-therapeutics-well-known.yml
+- type: DomainSecurity
+  url: security/kartos-therapeutics-domain-security.yml
+- type: LLMsTxt
+  url: llms/kartos-therapeutics-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1

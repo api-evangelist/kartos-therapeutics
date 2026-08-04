@@ -1,0 +1,62 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/kartos-therapeutics-content-openapi.yml
+note: >-
+  Kartos Therapeutics publishes no versioning policy, no deprecation policy, no SLA, no status
+  page and no changelog for this surface — it is not a product they operate as an API. The
+  lifecycle below is inherited from WordPress core and recorded as observed on 2026-08-04.
+  Absence is recorded honestly; no StatusPage or Deprecation pointer is emitted in apis.yml
+  because neither exists.
+versioning:
+  scheme: uri-path-namespace
+  current: wp/v2
+  namespaces:
+  - oembed/1.0
+  - yoast/v1
+  - wp/v2
+  - wp-site-health/v1
+  - wp-block-editor/v1
+  - wp-abilities/v1
+  docs: https://developer.wordpress.org/rest-api/
+  provider_policy: none-published
+  detail: >-
+    The wp/v2 namespace has been stable since WordPress 4.7 and is versioned by the WordPress
+    project, not by Kartos. The site reports generator WordPress 7.0.2 on PHP 8.3.29.
+platform:
+  cms: WordPress 7.0.2
+  server: nginx
+  runtime: PHP/8.3.29
+  hosting: >-
+    Azure App Service — responses set the TiPMix and x-ms-routing-name routing cookies, and one
+    team record still carries a guid on kartoscorp.azurewebsites.net from before the custom domain
+    was in place.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  detail: No Sunset or Deprecation response headers were observed on any route.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+changelog:
+  url: null
+  detail: >-
+    No changelog is published. The closest available change signal is the `modified` timestamp on
+    each object: the 8 pages were last modified 2025-10-24 to 2025-10-28, and the newest
+    presentation (the POIESIS phase III poster) was published 2026-04-21.
+content_freshness:
+  pages_last_modified: '2025-10-28'
+  newest_presentation: '2026-04-21'
+  newest_media: '2026-04'
+  observed: '2026-08-04'
+stability:
+  assessment: >-
+    Stable but incidental. The contract is WordPress core's, so it will not break on a Kartos
+    decision, but Kartos gives no undertaking that /wp-json/ stays reachable — a plugin, a WAF
+    rule or a hosting change could disable it without notice, and API responses already carry
+    X-Robots-Tag noindex, signalling the site does not intend this surface to be consumed.
+  advice: >-
+    Treat as a best-effort read-only content source. Cache aggressively, tolerate disappearance,
+    and do not build a dependency on it.

@@ -1,0 +1,113 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/kartos-therapeutics-content-openapi.yml
+note: >-
+  Kartos Therapeutics documents no API conventions of its own — it publishes no developer portal,
+  no API reference and no getting-started guide. Everything below is DERIVED from the live
+  behaviour of the WordPress REST API at https://kartosthera.com/wp-json, verified anonymously on
+  2026-08-04, and from the upstream contract defined at https://developer.wordpress.org/rest-api/.
+  The conventions are WordPress core conventions, not conventions Kartos authored.
+authentication:
+  style: none-required-for-read
+  detail: >-
+    Every catalogued operation is readable anonymously with no header, key or token. The site's
+    route index advertises WordPress application passwords (HTTP Basic against
+    /wp-admin/authorize-application.php) for write and privileged-read access, but those are
+    issued only to existing WordPress accounts — there is no developer sign-up and no
+    self-service credential issuance.
+  artifact: authentication/kartos-therapeutics-authentication.yml
+idempotency:
+  supported: false
+  detail: >-
+    No idempotency contract exists. The route index declares no Idempotency-Key header or
+    parameter on any route, and every operation catalogued here is a safe GET. Write routes are
+    registered (POST/PUT/PATCH/DELETE on posts, pages, media, team, presentation) but are
+    unreachable without credentials, and WordPress core defines no idempotency-key semantics for
+    them.
+pagination:
+  style: page-number
+  params:
+    page:
+      description: 1-based page index.
+      default: 1
+    per_page:
+      description: Items per page.
+      default: 10
+      max: 100
+      error_on_exceed: 400 rest_invalid_param (rest_out_of_bounds)
+  response_headers:
+    X-WP-Total: Total items in the collection.
+    X-WP-TotalPages: Total pages available.
+    Link: RFC 8288 rel="next" / rel="prev" links.
+  exposed_via_cors: >-
+    X-WP-Total, X-WP-TotalPages and Link are listed in the Access-Control-Expose-Headers response
+    header, so a browser client can read them cross-origin.
+  verified: true
+sparse_fieldsets:
+  supported: true
+  param: _fields
+  detail: Comma-separated list of top-level fields to return, e.g. `?_fields=id,slug,title,link`.
+field_expansion:
+  supported: false
+  detail: >-
+    There is no `expand` parameter. Related objects are reached through the HAL-style `_links`
+    block present on every object (`author`, `wp:featuredmedia`, `wp:attachment`, `self`,
+    `collection`), or by requesting `?_embed` to inline the embeddable ones.
+  embed_param: _embed
+context_scoping:
+  param: context
+  values: [view, embed, edit]
+  detail: >-
+    `view` (default) and `embed` are available anonymously; `edit` returns 401 rest_forbidden.
+    The context selected determines which fields appear on each object.
+metadata:
+  supported: partial
+  detail: >-
+    Objects expose a `meta` object, and the two Kartos custom post types carry Advanced Custom
+    Fields under a top-level `acf` key. On `team` records `acf` is a populated object
+    (`team-job-title`, `team-credentials`, `team-bio`); on `presentation` records `acf` is
+    returned as an empty array, so the presentation metadata lives in the rendered page rather
+    than in structured fields.
+request_tracing:
+  request_id_header: none
+  detail: No correlation or request-id header is returned. Azure App Service routing cookies
+    (TiPMix, x-ms-routing-name) are set but are not a tracing surface.
+versioning:
+  scheme: uri-path-namespace
+  current: wp/v2
+  namespaces: [oembed/1.0, yoast/v1, wp/v2, wp-site-health/v1, wp-block-editor/v1, wp-abilities/v1]
+  detail: >-
+    Versioning is inherited from WordPress core namespaces, not from a Kartos versioning policy.
+    The site runs WordPress 7.0.2; the wp/v2 namespace has been stable since WordPress 4.7.
+  artifact: lifecycle/kartos-therapeutics-lifecycle.yml
+error_envelope:
+  format: wordpress-rest-error
+  media_type: application/json
+  shape: '{code, message, data: {status, params?, details?}}'
+  rfc9457: false
+  artifact: errors/kartos-therapeutics-problem-types.yml
+rate_limiting:
+  documented: false
+  signaled: false
+  detail: >-
+    No RateLimit, X-RateLimit-* or Retry-After headers were observed on any response. Kartos
+    publishes no rate-limit policy for this surface; consumers should assume ordinary
+    web-server-level protection and behave conservatively.
+content_negotiation:
+  request: Query parameters only; no request bodies on any catalogued operation.
+  response: application/json; charset=UTF-8 on every JSON route.
+cors:
+  allow_headers: [Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type]
+  expose_headers: [X-WP-Total, X-WP-TotalPages, Link]
+security_headers:
+  strict_transport_security: max-age=31536000; includeSubDomains; preload
+  x_content_type_options: nosniff
+  x_frame_options: SAMEORIGIN
+  x_xss_protection: 1; mode=block
+  referrer_policy: strict-origin
+  permissions_policy: geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self)
+  x_robots_tag: noindex
+  note: >-
+    The API responses carry X-Robots-Tag noindex — the site does not want this surface indexed,
+    even though it serves it anonymously.
+  artifact: security/kartos-therapeutics-domain-security.yml
