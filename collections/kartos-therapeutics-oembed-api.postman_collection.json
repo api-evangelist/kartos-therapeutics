@@ -1,0 +1,236 @@
+{
+  "item": [
+    {
+      "id": "9f60d6bc-2652-45ff-a818-4b0b933f1b1f",
+      "name": "oembed",
+      "description": {
+        "content": "The oEmbed 1.0 provider endpoint for kartosthera.com URLs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "71585f2a-9258-4bfa-aa26-badee099a904",
+          "name": "Get an oEmbed response for a kartosthera.com URL",
+          "request": {
+            "name": "Get an oEmbed response for a kartosthera.com URL",
+            "description": {
+              "content": "The oEmbed 1.0 provider endpoint. Returns provider name, author, title and embeddable HTML for any published kartosthera.com URL. Verified against the /science/ page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oembed",
+                "1.0",
+                "embed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<uri>",
+                  "description": "(Required) The kartosthera.com URL to embed."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxwidth",
+                  "value": "600"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5a05ea62-961f-4f4a-aef7-e646be196bc9",
+              "name": "An oEmbed response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oembed",
+                    "1.0",
+                    "embed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "https://kartosthera.com/science/"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "maxwidth",
+                      "value": "600"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": \"string\",\n  \"provider_name\": \"string\",\n  \"provider_url\": \"http://UctriddFCnnDXwVeivWk.tagiD7ZeJk+TChsxh-neBhlYkOrBk82w-P.EET\",\n  \"author_name\": \"string\",\n  \"author_url\": \"https://BSHmeTvAgFWXUiKYT.xgbZz-DJxMfCIHqdqlaUt6uQiunrma6aYjkwCtqPVa.4ihv28vbyy19XK\",\n  \"title\": \"string\",\n  \"type\": \"string\",\n  \"width\": 9836,\n  \"height\": 8775,\n  \"html\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d04c66ae-ef66-403e-b4a4-7323f042711c",
+              "name": "Invalid parameter.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oembed",
+                    "1.0",
+                    "embed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "https://kartosthera.com/science/"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "maxwidth",
+                      "value": "600"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"data\": {\n    \"status\": 4748,\n    \"params\": {},\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd2cf12b-352b-4f02-9325-687392c58073",
+              "name": "No object found with that identifier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oembed",
+                    "1.0",
+                    "embed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "https://kartosthera.com/science/"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "maxwidth",
+                      "value": "600"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"data\": {\n    \"status\": 4748,\n    \"params\": {},\n    \"details\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://kartosthera.com/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b0886c20-1904-46c8-b559-2bab568d40f3",
+    "name": "Kartos Therapeutics Content Oembed API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Kartos Therapeutics publishes no developer program, no developer portal and no API documentation. The only machine-readable API surface reachable on kartosthera.com without credentials is the WordPress REST API the site registers at `/wp-json/`, which is documented upstream by the WordPress REST API Handbook rather than by Kartos Therapeutics.\n\nThis document is DERIVED by the API Evangelist enrichment pipeline from the route index the site itself publishes at https://kartosthera.com/wp-json/ (183 routes across the namespaces `oembed/1.0`, `yoast/v1`, `wp/v2`, `wp-site-health/v1`, `wp-block-editor/v1` and `wp-abilities/v1`; generator reported WordPress 7.0.2). ONLY the operations that were verified to return data anonymously on 2026-08-04 are modelled here. Write operations, and the many routes that answer `401 rest_cannot_view` / `rest_forbidden` without credentials, are deliberately excluded — see `x-anonymous-denied` on this object for the observed denials.\n\nThe interesting part of this surface is not stock WordPress: Kartos registers two custom post types that carry the company's actual scientific and corporate record — `presentation` (5 published congress abstracts and posters for navtemadlin, each linked to a PDF in the media library) and `team` (15 leadership, board and advisor bios, each with structured ACF fields for job title, credentials and biography). Both are REST-enabled and anonymously readable. The `posts` collection is registered but empty (`X-WP-Total: 0`) — Kartos authors no blog and no press-release archive as posts.\n\nContact Support:\n Name: Kartos Therapeutics\n Email: info@kartosthera.com",
+      "type": "text/plain"
+    }
+  }
+}

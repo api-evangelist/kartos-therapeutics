@@ -1,0 +1,35 @@
+{
+  "provider": "kartos-therapeutics",
+  "sources": [
+    "kartos-therapeutics-content-api-openapi.yml",
+    "kartos-therapeutics-discovery-api-openapi.yml",
+    "kartos-therapeutics-media-api-openapi.yml",
+    "kartos-therapeutics-oembed-api-openapi.yml",
+    "kartos-therapeutics-people-api-openapi.yml",
+    "kartos-therapeutics-science-api-openapi.yml",
+    "kartos-therapeutics-taxonomy-api-openapi.yml"
+  ],
+  "outputs": [
+    "kartos-therapeutics-content-api-openapi.yml",
+    "kartos-therapeutics-discovery-api-openapi.yml",
+    "kartos-therapeutics-media-api-openapi.yml",
+    "kartos-therapeutics-oembed-api-openapi.yml",
+    "kartos-therapeutics-people-api-openapi.yml",
+    "kartos-therapeutics-science-api-openapi.yml",
+    "kartos-therapeutics-taxonomy-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "kartos-therapeutics-content-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "kartos-therapeutics-discovery-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "kartos-therapeutics-media-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "kartos-therapeutics-oembed-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "kartos-therapeutics-people-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "kartos-therapeutics-science-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "kartos-therapeutics-taxonomy-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

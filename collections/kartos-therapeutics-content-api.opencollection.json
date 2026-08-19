@@ -1,0 +1,215 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kartos Therapeutics Content API",
+    "version": "2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "content",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List published pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/pages",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to one or more specific slugs."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort collection by object attribute."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort ascending or descending."
+              },
+              {
+                "name": "_fields",
+                "value": "id,slug,title,link",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (sparse fieldsets)."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` requires authentication."
+              }
+            ]
+          },
+          "docs": "Returns the 8 published pages of kartosthera.com — Home, Science, Research, Presentations & Publications, Advocacy, About, Contact and Privacy Policy — with rendered title, content and excerpt. Total count is returned in the `X-WP-Total` response header."
+        },
+        {
+          "info": {
+            "name": "Get a page by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` requires authentication."
+              },
+              {
+                "name": "_fields",
+                "value": "id,slug,title,link",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (sparse fieldsets)."
+              }
+            ]
+          },
+          "docs": "Get a page by id"
+        },
+        {
+          "info": {
+            "name": "List posts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/posts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "_fields",
+                "value": "id,slug,title,link",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (sparse fieldsets)."
+              }
+            ]
+          },
+          "docs": "The `posts` collection is registered and anonymously readable but EMPTY — verified `X-WP-Total: 0` on 2026-08-04. Kartos Therapeutics runs no blog and maintains no press-release archive as WordPress posts; its scientific record lives in the `presentation` custom post type instead."
+        },
+        {
+          "info": {
+            "name": "Search across published content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/search",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "The search term."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to an object type."
+              },
+              {
+                "name": "subtype",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to a registered subtype (e.g. page, presentation, team)."
+              }
+            ]
+          },
+          "docs": "Cross-content search returning lightweight `{id, title, url, type, subtype}` results. A query for `navtemadlin` returned 28 matches across pages and presentations on 2026-08-04."
+        },
+        {
+          "info": {
+            "name": "List comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/comments",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              }
+            ]
+          },
+          "docs": "Comments are enabled at the route level but the collection is empty (`X-WP-Total: 0`)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

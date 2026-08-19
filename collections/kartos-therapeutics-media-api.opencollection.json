@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kartos Therapeutics Content Media API",
+    "version": "2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "media",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List media library items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/media",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "_fields",
+                "value": "id,slug,title,link",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (sparse fieldsets)."
+              },
+              {
+                "name": "media_type",
+                "value": "",
+                "type": "query",
+                "description": "Limit to a media type."
+              },
+              {
+                "name": "mime_type",
+                "value": "",
+                "type": "query",
+                "description": "Limit to a specific MIME type."
+              }
+            ]
+          },
+          "docs": "Returns the 62-item media library — 21 SVG and 18 PNG assets (logos, investor marks and scientific figures used on the science pages), 17 JPEG images, and 6 PDFs including the navtemadlin congress posters."
+        },
+        {
+          "info": {
+            "name": "Get a media item by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/media/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "_fields",
+                "value": "id,slug,title,link",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (sparse fieldsets)."
+              }
+            ]
+          },
+          "docs": "Get a media item by id"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

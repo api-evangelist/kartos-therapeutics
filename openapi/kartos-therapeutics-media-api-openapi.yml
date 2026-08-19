@@ -1,0 +1,277 @@
+openapi: 3.2.0
+info:
+  title: Kartos Therapeutics Content Media API
+  version: '2'
+  summary: The anonymously readable WordPress REST content surface behind kartosthera.com.
+  description: 'Kartos Therapeutics publishes no developer program, no developer portal and no API documentation. The only machine-readable API surface reachable on kartosthera.com without credentials is the WordPress REST API the site registers at `/wp-json/`, which is documented upstream by the WordPress REST API Handbook rather than by Kartos Therapeutics.
+
+
+    This document is DERIVED by the API Evangelist enrichment pipeline from the route index the site itself publishes at https://kartosthera.com/wp-json/ (183 routes across the namespaces `oembed/1.0`, `yoast/v1`, `wp/v2`, `wp-site-health/v1`, `wp-block-editor/v1` and `wp-abilities/v1`; generator reported WordPress 7.0.2). ONLY the operations that were verified to return data anonymously on 2026-08-04 are modelled here. Write operations, and the many routes that answer `401 rest_cannot_view` / `rest_forbidden` without credentials, are deliberately excluded — see `x-anonymous-denied` on this object for the observed denials.
+
+
+    The interesting part of this surface is not stock WordPress: Kartos registers two custom post types that carry the company''s actual scientific and corporate record — `presentation` (5 published congress abstracts and posters for navtemadlin, each linked to a PDF in the media library) and `team` (15 leadership, board and advisor bios, each with structured ACF fields for job title, credentials and biography). Both are REST-enabled and anonymously readable. The `posts` collection is registered but empty (`X-WP-Total: 0`) — Kartos authors no blog and no press-release archive as posts.'
+  contact:
+    name: Kartos Therapeutics
+    email: info@kartosthera.com
+    url: https://kartosthera.com/contact/
+  license:
+    name: Not published
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://kartosthera.com/wp-json/
+  x-verified: '2026-08-04'
+  x-upstream-contract: https://developer.wordpress.org/rest-api/
+  x-not-a-provider-published-spec: true
+  x-anonymous-denied:
+  - path: /wp/v2/settings
+    status: 401
+    code: rest_forbidden
+  - path: /wp/v2/menus
+    status: 401
+    code: rest_cannot_view
+  - path: /wp/v2/menu-items
+    status: 401
+    code: rest_cannot_view
+  - path: /wp/v2/menu-locations
+    status: 401
+    code: rest_cannot_view
+  - path: /wp/v2/themes
+    status: 401
+    code: rest_cannot_view_themes
+  - path: /wp/v2/plugins
+    status: 401
+    code: rest_cannot_view_plugins
+  - path: /wp/v2/block-types
+    status: 401
+    code: rest_block_type_cannot_view
+  - path: /wp/v2/sidebars
+    status: 401
+    code: rest_cannot_manage_widgets
+  - path: /wp/v2/templates
+    status: 401
+    code: rest_cannot_manage_templates
+  - path: /wp/v2/font-collections
+    status: 401
+    code: rest_cannot_read
+  - path: /wp/v2/icons
+    status: 401
+    code: rest_cannot_view
+  - path: /wp-abilities/v1/abilities
+    status: 401
+    code: rest_forbidden
+  - path: /wp-abilities/v1/categories
+    status: 401
+    code: rest_forbidden
+  - path: /wp-block-editor/v1/url-details
+    status: 401
+    code: rest_cannot_view_url_details
+  - path: /yoast/v1/statistics
+    status: 401
+    code: rest_forbidden
+  - path: /wp-site-health/v1/tests/background-updates
+    status: 401
+    code: rest_forbidden
+servers:
+- url: https://kartosthera.com/wp-json
+  description: Production WordPress REST API for kartosthera.com
+security: []
+tags:
+- name: media
+  description: The media library — scientific figures, investor logos and presentation PDFs.
+paths:
+  /wp/v2/media:
+    get:
+      tags:
+      - media
+      operationId: listMedia
+      summary: List media library items
+      description: Returns the 62-item media library — 21 SVG and 18 PNG assets (logos, investor marks and scientific figures used on the science pages), 17 JPEG images, and 6 PDFs including the navtemadlin congress posters.
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Search'
+      - $ref: '#/components/parameters/Fields'
+      - name: media_type
+        in: query
+        description: Limit to a media type.
+        schema:
+          type: string
+          enum:
+          - image
+          - video
+          - text
+          - application
+          - audio
+      - name: mime_type
+        in: query
+        description: Limit to a specific MIME type.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A collection of media items.
+          headers:
+            X-WP-Total:
+              $ref: '#/components/headers/XWPTotal'
+            X-WP-TotalPages:
+              $ref: '#/components/headers/XWPTotalPages'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MediaItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /wp/v2/media/{id}:
+    get:
+      tags:
+      - media
+      operationId: getMediaItem
+      summary: Get a media item by id
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: A media item.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  headers:
+    XWPTotalPages:
+      description: Total number of pages available.
+      schema:
+        type: integer
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+  parameters:
+    PerPage:
+      name: per_page
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 100
+    Page:
+      name: page
+      in: query
+      description: Current page of the collection (1-based).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    Search:
+      name: search
+      in: query
+      description: Limit results to those matching a string.
+      schema:
+        type: string
+    Fields:
+      name: _fields
+      in: query
+      description: Comma-separated list of fields to include in the response (sparse fieldsets).
+      schema:
+        type: string
+      example: id,slug,title,link
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier for the object.
+      schema:
+        type: integer
+  schemas:
+    Links:
+      type: object
+      description: HAL-style `_links` hypermedia block present on every object.
+      additionalProperties: true
+    Rendered:
+      type: object
+      properties:
+        rendered:
+          type: string
+        protected:
+          type: boolean
+    MediaItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        date:
+          type: string
+        link:
+          type: string
+          format: uri
+        title:
+          $ref: '#/components/schemas/Rendered'
+        media_type:
+          type: string
+          enum:
+          - image
+          - file
+        mime_type:
+          type: string
+          examples:
+          - image/svg+xml
+          - image/png
+          - image/jpeg
+          - application/pdf
+        source_url:
+          type: string
+          format: uri
+        alt_text:
+          type: string
+        media_details:
+          type: object
+        _links:
+          $ref: '#/components/schemas/Links'
+    Error:
+      type: object
+      description: The WordPress REST error envelope. NOT RFC 9457 — the media type is `application/json` and the shape is `{code, message, data:{status}}`.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code (e.g. `rest_post_invalid_id`, `rest_forbidden`).
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+            params:
+              type: object
+            details:
+              type: object
+      required:
+      - code
+      - message
+  responses:
+    BadRequest:
+      description: Invalid parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: No object found with that identifier.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress application passwords, advertised by the site's own route index at `/wp-json/` (`authentication.application-passwords.endpoints.authorization` → https://kartosthera.com/wp-admin/authorize-application.php). Application passwords are issued to existing WordPress accounts only; there is no public sign-up, no developer registration and no self-service credential issuance. Every operation modelled in this document is readable ANONYMOUSLY — this scheme is documented because the site advertises it, not because any catalogued operation requires it.

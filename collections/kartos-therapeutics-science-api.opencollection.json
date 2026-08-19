@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kartos Therapeutics Content Science API",
+    "version": "2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "science",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List navtemadlin presentations and publications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/presentation",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to one or more specific slugs."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort collection by object attribute."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort ascending or descending."
+              },
+              {
+                "name": "_fields",
+                "value": "id,slug,title,link",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (sparse fieldsets)."
+              }
+            ]
+          },
+          "docs": "Returns the `presentation` custom post type — the congress abstracts and posters Kartos Therapeutics publishes for navtemadlin (KRT-232), including the POIESIS Phase 3 study design, the BOREAS Phase 3 results, and the ruxolitinib-combination apoptosis data. Each record links to a PDF in the media library. 5 items published as of 2026-08-04."
+        },
+        {
+          "info": {
+            "name": "Get a presentation by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/presentation/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the object."
+              },
+              {
+                "name": "_fields",
+                "value": "id,slug,title,link",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (sparse fieldsets)."
+              }
+            ]
+          },
+          "docs": "Get a presentation by id"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,300 @@
+openapi: 3.2.0
+info:
+  title: Kartos Therapeutics Content Taxonomy API
+  version: '2'
+  summary: The anonymously readable WordPress REST content surface behind kartosthera.com.
+  description: 'Kartos Therapeutics publishes no developer program, no developer portal and no API documentation. The only machine-readable API surface reachable on kartosthera.com without credentials is the WordPress REST API the site registers at `/wp-json/`, which is documented upstream by the WordPress REST API Handbook rather than by Kartos Therapeutics.
+
+
+    This document is DERIVED by the API Evangelist enrichment pipeline from the route index the site itself publishes at https://kartosthera.com/wp-json/ (183 routes across the namespaces `oembed/1.0`, `yoast/v1`, `wp/v2`, `wp-site-health/v1`, `wp-block-editor/v1` and `wp-abilities/v1`; generator reported WordPress 7.0.2). ONLY the operations that were verified to return data anonymously on 2026-08-04 are modelled here. Write operations, and the many routes that answer `401 rest_cannot_view` / `rest_forbidden` without credentials, are deliberately excluded — see `x-anonymous-denied` on this object for the observed denials.
+
+
+    The interesting part of this surface is not stock WordPress: Kartos registers two custom post types that carry the company''s actual scientific and corporate record — `presentation` (5 published congress abstracts and posters for navtemadlin, each linked to a PDF in the media library) and `team` (15 leadership, board and advisor bios, each with structured ACF fields for job title, credentials and biography). Both are REST-enabled and anonymously readable. The `posts` collection is registered but empty (`X-WP-Total: 0`) — Kartos authors no blog and no press-release archive as posts.'
+  contact:
+    name: Kartos Therapeutics
+    email: info@kartosthera.com
+    url: https://kartosthera.com/contact/
+  license:
+    name: Not published
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://kartosthera.com/wp-json/
+  x-verified: '2026-08-04'
+  x-upstream-contract: https://developer.wordpress.org/rest-api/
+  x-not-a-provider-published-spec: true
+  x-anonymous-denied:
+  - path: /wp/v2/settings
+    status: 401
+    code: rest_forbidden
+  - path: /wp/v2/menus
+    status: 401
+    code: rest_cannot_view
+  - path: /wp/v2/menu-items
+    status: 401
+    code: rest_cannot_view
+  - path: /wp/v2/menu-locations
+    status: 401
+    code: rest_cannot_view
+  - path: /wp/v2/themes
+    status: 401
+    code: rest_cannot_view_themes
+  - path: /wp/v2/plugins
+    status: 401
+    code: rest_cannot_view_plugins
+  - path: /wp/v2/block-types
+    status: 401
+    code: rest_block_type_cannot_view
+  - path: /wp/v2/sidebars
+    status: 401
+    code: rest_cannot_manage_widgets
+  - path: /wp/v2/templates
+    status: 401
+    code: rest_cannot_manage_templates
+  - path: /wp/v2/font-collections
+    status: 401
+    code: rest_cannot_read
+  - path: /wp/v2/icons
+    status: 401
+    code: rest_cannot_view
+  - path: /wp-abilities/v1/abilities
+    status: 401
+    code: rest_forbidden
+  - path: /wp-abilities/v1/categories
+    status: 401
+    code: rest_forbidden
+  - path: /wp-block-editor/v1/url-details
+    status: 401
+    code: rest_cannot_view_url_details
+  - path: /yoast/v1/statistics
+    status: 401
+    code: rest_forbidden
+  - path: /wp-site-health/v1/tests/background-updates
+    status: 401
+    code: rest_forbidden
+servers:
+- url: https://kartosthera.com/wp-json
+  description: Production WordPress REST API for kartosthera.com
+security: []
+tags:
+- name: taxonomy
+  description: Registered post types, statuses, taxonomies and terms.
+paths:
+  /wp/v2/types:
+    get:
+      tags:
+      - taxonomy
+      operationId: listTypes
+      summary: List registered post types
+      description: Returns the 13 registered post types, including the two Kartos-specific ones — `presentation` (Presentations) and `team` (Team Members).
+      responses:
+        '200':
+          description: A map of post types keyed by slug.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/PostType'
+  /wp/v2/types/{type}:
+    get:
+      tags:
+      - taxonomy
+      operationId: getType
+      summary: Get a registered post type
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+        example: presentation
+      responses:
+        '200':
+          description: A post type descriptor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostType'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /wp/v2/statuses:
+    get:
+      tags:
+      - taxonomy
+      operationId: listStatuses
+      summary: List publicly queryable post statuses
+      description: Returns the publicly visible statuses — `publish` and the ACF `acf-disabled` status.
+      responses:
+        '200':
+          description: A map of statuses keyed by slug.
+          content:
+            application/json:
+              schema:
+                type: object
+  /wp/v2/taxonomies:
+    get:
+      tags:
+      - taxonomy
+      operationId: listTaxonomies
+      summary: List registered taxonomies
+      description: Returns the registered taxonomies — `category`, `post_tag`, `nav_menu` and `wp_pattern_category`. Neither Kartos custom post type is attached to a taxonomy.
+      responses:
+        '200':
+          description: A map of taxonomies keyed by slug.
+          content:
+            application/json:
+              schema:
+                type: object
+  /wp/v2/categories:
+    get:
+      tags:
+      - taxonomy
+      operationId: listCategories
+      summary: List categories
+      description: One category is registered (`uncategorized`) with a count of 0.
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/PerPage'
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: A collection of categories.
+          headers:
+            X-WP-Total:
+              $ref: '#/components/headers/XWPTotal'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+  /wp/v2/tags:
+    get:
+      tags:
+      - taxonomy
+      operationId: listTags
+      summary: List tags
+      description: 'No tags are registered on this site (`X-WP-Total: 0`).'
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: A collection of tags.
+          headers:
+            X-WP-Total:
+              $ref: '#/components/headers/XWPTotal'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Term'
+components:
+  parameters:
+    PerPage:
+      name: per_page
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 100
+    Page:
+      name: page
+      in: query
+      description: Current page of the collection (1-based).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    Fields:
+      name: _fields
+      in: query
+      description: Comma-separated list of fields to include in the response (sparse fieldsets).
+      schema:
+        type: string
+      example: id,slug,title,link
+  schemas:
+    Links:
+      type: object
+      description: HAL-style `_links` hypermedia block present on every object.
+      additionalProperties: true
+    Term:
+      type: object
+      properties:
+        id:
+          type: integer
+        count:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        taxonomy:
+          type: string
+        link:
+          type: string
+          format: uri
+        _links:
+          $ref: '#/components/schemas/Links'
+    PostType:
+      type: object
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        rest_base:
+          type: string
+        rest_namespace:
+          type: string
+        hierarchical:
+          type: boolean
+        taxonomies:
+          type: array
+          items:
+            type: string
+        _links:
+          $ref: '#/components/schemas/Links'
+    Error:
+      type: object
+      description: The WordPress REST error envelope. NOT RFC 9457 — the media type is `application/json` and the shape is `{code, message, data:{status}}`.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code (e.g. `rest_post_invalid_id`, `rest_forbidden`).
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+            params:
+              type: object
+            details:
+              type: object
+      required:
+      - code
+      - message
+  headers:
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+  responses:
+    NotFound:
+      description: No object found with that identifier.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress application passwords, advertised by the site's own route index at `/wp-json/` (`authentication.application-passwords.endpoints.authorization` → https://kartosthera.com/wp-admin/authorize-application.php). Application passwords are issued to existing WordPress accounts only; there is no public sign-up, no developer registration and no self-service credential issuance. Every operation modelled in this document is readable ANONYMOUSLY — this scheme is documented because the site advertises it, not because any catalogued operation requires it.

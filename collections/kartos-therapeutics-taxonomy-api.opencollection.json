@@ -1,0 +1,125 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kartos Therapeutics Content Taxonomy API",
+    "version": "2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "taxonomy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List registered post types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/types"
+          },
+          "docs": "Returns the 13 registered post types, including the two Kartos-specific ones — `presentation` (Presentations) and `team` (Team Members)."
+        },
+        {
+          "info": {
+            "name": "Get a registered post type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/types/:type",
+            "params": [
+              {
+                "name": "type",
+                "value": "presentation",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a registered post type"
+        },
+        {
+          "info": {
+            "name": "List publicly queryable post statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/statuses"
+          },
+          "docs": "Returns the publicly visible statuses — `publish` and the ACF `acf-disabled` status."
+        },
+        {
+          "info": {
+            "name": "List registered taxonomies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/taxonomies"
+          },
+          "docs": "Returns the registered taxonomies — `category`, `post_tag`, `nav_menu` and `wp_pattern_category`. Neither Kartos custom post type is attached to a taxonomy."
+        },
+        {
+          "info": {
+            "name": "List categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/categories",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              },
+              {
+                "name": "_fields",
+                "value": "id,slug,title,link",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in the response (sparse fieldsets)."
+              }
+            ]
+          },
+          "docs": "One category is registered (`uncategorized`) with a count of 0."
+        },
+        {
+          "info": {
+            "name": "List tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2/tags",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection (1-based)."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return per page."
+              }
+            ]
+          },
+          "docs": "No tags are registered on this site (`X-WP-Total: 0`)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

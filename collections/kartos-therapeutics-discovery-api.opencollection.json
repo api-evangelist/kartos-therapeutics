@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kartos Therapeutics Content Discovery API",
+    "version": "2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the API route index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/"
+          },
+          "docs": "Returns the site's own description of this API — name, description, home URL, registered namespaces, the full `routes` map with allowed methods and arguments, and the `authentication` block advertising WordPress application passwords."
+        },
+        {
+          "info": {
+            "name": "Get the wp/v2 namespace index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kartosthera.com/wp-json/wp/v2"
+          },
+          "docs": "Returns the routes registered under the `wp/v2` namespace only."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
