@@ -29,6 +29,17 @@ created: '2026-08-04'
 modified: '2026-08-04'
 tags:
 - Company
+- Biotechnology
+- Pharmaceuticals
+- Oncology
+- Hematology
+- Rare Disease
+- Precision Medicine
+- Clinical Trials
+- Life Sciences
+- content-api
+tags_raw:
+- Company
 - biotechnology
 - pharmaceuticals
 - oncology
@@ -45,6 +56,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://kartosthera.com/wp-json
   tags:
+  - Content
+  tags_raw:
   - content
   properties:
   - type: OpenAPI
@@ -63,6 +76,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://kartosthera.com/wp-json
   tags:
+  - Discovery
+  tags_raw:
   - discovery
   properties:
   - type: OpenAPI
@@ -81,6 +96,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://kartosthera.com/wp-json
   tags:
+  - Media
+  tags_raw:
   - media
   properties:
   - type: OpenAPI
@@ -99,6 +116,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://kartosthera.com/wp-json
   tags:
+  - oEmbed
+  tags_raw:
   - oembed
   properties:
   - type: OpenAPI
@@ -117,6 +136,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://kartosthera.com/wp-json
   tags:
+  - People
+  tags_raw:
   - people
   properties:
   - type: OpenAPI
@@ -135,6 +156,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://kartosthera.com/wp-json
   tags:
+  - Science
+  tags_raw:
   - science
   properties:
   - type: OpenAPI
@@ -153,6 +176,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://kartosthera.com/wp-json
   tags:
+  - Taxonomy
+  tags_raw:
   - taxonomy
   properties:
   - type: OpenAPI
