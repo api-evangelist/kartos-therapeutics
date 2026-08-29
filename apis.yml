@@ -18,6 +18,17 @@ description: >-
   Soleus Capital. Kartos Therapeutics runs no developer program and publishes no product API, no
   developer portal and no API documentation; the only machine-readable surface reachable without
   credentials is the WordPress REST content API behind kartosthera.com, catalogued here.
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 image: https://kartosthera.com/wp-content/uploads/2025/10/og_kartos-therapeutics.jpg
 url: https://raw.githubusercontent.com/api-evangelist/kartos-therapeutics/refs/heads/main/apis.yml
 x-type: company
