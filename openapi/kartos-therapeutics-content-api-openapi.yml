@@ -221,31 +221,11 @@ paths:
                 items:
                   type: object
 components:
-  headers:
-    Link:
-      description: RFC 8288 pagination links (`rel="next"` / `rel="prev"`).
-      schema:
-        type: string
-    XWPTotal:
-      description: Total number of items in the collection.
-      schema:
-        type: integer
-    XWPTotalPages:
-      description: Total number of pages available.
-      schema:
-        type: integer
   schemas:
-    Page:
-      allOf:
-      - $ref: '#/components/schemas/Post'
-      - type: object
-        properties:
-          parent:
-            type: integer
-          menu_order:
-            type: integer
-          template:
-            type: string
+    Links:
+      type: object
+      description: HAL-style `_links` hypermedia block present on every object.
+      additionalProperties: true
     Post:
       type: object
       properties:
@@ -280,13 +260,6 @@ components:
           type: integer
         _links:
           $ref: '#/components/schemas/Links'
-    Rendered:
-      type: object
-      properties:
-        rendered:
-          type: string
-        protected:
-          type: boolean
     SearchResult:
       type: object
       properties:
@@ -303,6 +276,24 @@ components:
           type: string
         _links:
           $ref: '#/components/schemas/Links'
+    Rendered:
+      type: object
+      properties:
+        rendered:
+          type: string
+        protected:
+          type: boolean
+    Page:
+      allOf:
+      - $ref: '#/components/schemas/Post'
+      - type: object
+        properties:
+          parent:
+            type: integer
+          menu_order:
+            type: integer
+          template:
+            type: string
     Error:
       type: object
       description: The WordPress REST error envelope. NOT RFC 9457 — the media type is `application/json` and the shape is `{code, message, data:{status}}`.
@@ -325,24 +316,7 @@ components:
       required:
       - code
       - message
-    Links:
-      type: object
-      description: HAL-style `_links` hypermedia block present on every object.
-      additionalProperties: true
   parameters:
-    Search:
-      name: search
-      in: query
-      description: Limit results to those matching a string.
-      schema:
-        type: string
-    Fields:
-      name: _fields
-      in: query
-      description: Comma-separated list of fields to include in the response (sparse fieldsets).
-      schema:
-        type: string
-      example: id,slug,title,link
     Id:
       name: id
       in: path
@@ -350,24 +324,14 @@ components:
       description: Unique identifier for the object.
       schema:
         type: integer
-    Order:
-      name: order
+    Page:
+      name: page
       in: query
-      description: Sort ascending or descending.
+      description: Current page of the collection (1-based).
       schema:
-        type: string
-        enum:
-        - asc
-        - desc
-        default: desc
-    Slug:
-      name: slug
-      in: query
-      description: Limit results to one or more specific slugs.
-      schema:
-        type: array
-        items:
-          type: string
+        type: integer
+        default: 1
+        minimum: 1
     OrderBy:
       name: orderby
       in: query
@@ -405,14 +369,50 @@ components:
         - embed
         - edit
         default: view
-    Page:
-      name: page
+    Fields:
+      name: _fields
       in: query
-      description: Current page of the collection (1-based).
+      description: Comma-separated list of fields to include in the response (sparse fieldsets).
+      schema:
+        type: string
+      example: id,slug,title,link
+    Slug:
+      name: slug
+      in: query
+      description: Limit results to one or more specific slugs.
+      schema:
+        type: array
+        items:
+          type: string
+    Search:
+      name: search
+      in: query
+      description: Limit results to those matching a string.
+      schema:
+        type: string
+    Order:
+      name: order
+      in: query
+      description: Sort ascending or descending.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
+  headers:
+    Link:
+      description: RFC 8288 pagination links (`rel="next"` / `rel="prev"`).
+      schema:
+        type: string
+    XWPTotal:
+      description: Total number of items in the collection.
       schema:
         type: integer
-        default: 1
-        minimum: 1
+    XWPTotalPages:
+      description: Total number of pages available.
+      schema:
+        type: integer
   responses:
     NotFound:
       description: No object found with that identifier.

@@ -151,88 +151,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
 components:
-  parameters:
-    Slug:
-      name: slug
-      in: query
-      description: Limit results to one or more specific slugs.
-      schema:
-        type: array
-        items:
-          type: string
-    PerPage:
-      name: per_page
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 100
-    OrderBy:
-      name: orderby
-      in: query
-      description: Sort collection by object attribute.
-      schema:
-        type: string
-        enum:
-        - author
-        - date
-        - id
-        - include
-        - modified
-        - parent
-        - relevance
-        - slug
-        - title
-        default: date
-    Page:
-      name: page
-      in: query
-      description: Current page of the collection (1-based).
-      schema:
-        type: integer
-        default: 1
-        minimum: 1
-    Search:
-      name: search
-      in: query
-      description: Limit results to those matching a string.
-      schema:
-        type: string
-    Fields:
-      name: _fields
-      in: query
-      description: Comma-separated list of fields to include in the response (sparse fieldsets).
-      schema:
-        type: string
-      example: id,slug,title,link
-    Order:
-      name: order
-      in: query
-      description: Sort ascending or descending.
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-        default: desc
-    Id:
-      name: id
-      in: path
-      required: true
-      description: Unique identifier for the object.
-      schema:
-        type: integer
-  headers:
-    XWPTotalPages:
-      description: Total number of pages available.
-      schema:
-        type: integer
-    XWPTotal:
-      description: Total number of items in the collection.
-      schema:
-        type: integer
   schemas:
     User:
       type: object
@@ -254,10 +172,6 @@ components:
           type: object
         _links:
           $ref: '#/components/schemas/Links'
-    Links:
-      type: object
-      description: HAL-style `_links` hypermedia block present on every object.
-      additionalProperties: true
     TeamMember:
       type: object
       description: A leadership, board or advisor record. Registered custom post type `team`, rest_base `team`, no taxonomies attached.
@@ -300,13 +214,10 @@ components:
               description: Biography, as HTML.
         _links:
           $ref: '#/components/schemas/Links'
-    Rendered:
+    Links:
       type: object
-      properties:
-        rendered:
-          type: string
-        protected:
-          type: boolean
+      description: HAL-style `_links` hypermedia block present on every object.
+      additionalProperties: true
     Error:
       type: object
       description: The WordPress REST error envelope. NOT RFC 9457 — the media type is `application/json` and the shape is `{code, message, data:{status}}`.
@@ -329,19 +240,108 @@ components:
       required:
       - code
       - message
+    Rendered:
+      type: object
+      properties:
+        rendered:
+          type: string
+        protected:
+          type: boolean
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier for the object.
+      schema:
+        type: integer
+    Page:
+      name: page
+      in: query
+      description: Current page of the collection (1-based).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    Fields:
+      name: _fields
+      in: query
+      description: Comma-separated list of fields to include in the response (sparse fieldsets).
+      schema:
+        type: string
+      example: id,slug,title,link
+    Slug:
+      name: slug
+      in: query
+      description: Limit results to one or more specific slugs.
+      schema:
+        type: array
+        items:
+          type: string
+    PerPage:
+      name: per_page
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 100
+    OrderBy:
+      name: orderby
+      in: query
+      description: Sort collection by object attribute.
+      schema:
+        type: string
+        enum:
+        - author
+        - date
+        - id
+        - include
+        - modified
+        - parent
+        - relevance
+        - slug
+        - title
+        default: date
+    Search:
+      name: search
+      in: query
+      description: Limit results to those matching a string.
+      schema:
+        type: string
+    Order:
+      name: order
+      in: query
+      description: Sort ascending or descending.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
   responses:
-    BadRequest:
-      description: Invalid parameter.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: No object found with that identifier.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  headers:
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+    XWPTotalPages:
+      description: Total number of pages available.
+      schema:
+        type: integer
   securitySchemes:
     applicationPassword:
       type: http

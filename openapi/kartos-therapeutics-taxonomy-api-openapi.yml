@@ -190,36 +190,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Term'
 components:
-  parameters:
-    PerPage:
-      name: per_page
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 100
-    Page:
-      name: page
-      in: query
-      description: Current page of the collection (1-based).
-      schema:
-        type: integer
-        default: 1
-        minimum: 1
-    Fields:
-      name: _fields
-      in: query
-      description: Comma-separated list of fields to include in the response (sparse fieldsets).
-      schema:
-        type: string
-      example: id,slug,title,link
   schemas:
-    Links:
-      type: object
-      description: HAL-style `_links` hypermedia block present on every object.
-      additionalProperties: true
     Term:
       type: object
       properties:
@@ -238,27 +209,10 @@ components:
           format: uri
         _links:
           $ref: '#/components/schemas/Links'
-    PostType:
+    Links:
       type: object
-      properties:
-        name:
-          type: string
-        slug:
-          type: string
-        description:
-          type: string
-        rest_base:
-          type: string
-        rest_namespace:
-          type: string
-        hierarchical:
-          type: boolean
-        taxonomies:
-          type: array
-          items:
-            type: string
-        _links:
-          $ref: '#/components/schemas/Links'
+      description: HAL-style `_links` hypermedia block present on every object.
+      additionalProperties: true
     Error:
       type: object
       description: The WordPress REST error envelope. NOT RFC 9457 — the media type is `application/json` and the shape is `{code, message, data:{status}}`.
@@ -281,11 +235,52 @@ components:
       required:
       - code
       - message
-  headers:
-    XWPTotal:
-      description: Total number of items in the collection.
+    PostType:
+      type: object
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        rest_base:
+          type: string
+        rest_namespace:
+          type: string
+        hierarchical:
+          type: boolean
+        taxonomies:
+          type: array
+          items:
+            type: string
+        _links:
+          $ref: '#/components/schemas/Links'
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Current page of the collection (1-based).
       schema:
         type: integer
+        default: 1
+        minimum: 1
+    Fields:
+      name: _fields
+      in: query
+      description: Comma-separated list of fields to include in the response (sparse fieldsets).
+      schema:
+        type: string
+      example: id,slug,title,link
+    PerPage:
+      name: per_page
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 100
   responses:
     NotFound:
       description: No object found with that identifier.
@@ -293,6 +288,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  headers:
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
   securitySchemes:
     applicationPassword:
       type: http

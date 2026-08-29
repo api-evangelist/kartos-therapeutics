@@ -133,6 +133,28 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      description: The WordPress REST error envelope. NOT RFC 9457 — the media type is `application/json` and the shape is `{code, message, data:{status}}`.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code (e.g. `rest_post_invalid_id`, `rest_forbidden`).
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+            params:
+              type: object
+            details:
+              type: object
+      required:
+      - code
+      - message
     OEmbed:
       type: object
       properties:
@@ -158,28 +180,6 @@ components:
           type: integer
         html:
           type: string
-    Error:
-      type: object
-      description: The WordPress REST error envelope. NOT RFC 9457 — the media type is `application/json` and the shape is `{code, message, data:{status}}`.
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code (e.g. `rest_post_invalid_id`, `rest_forbidden`).
-        message:
-          type: string
-          description: Human-readable message.
-        data:
-          type: object
-          properties:
-            status:
-              type: integer
-            params:
-              type: object
-            details:
-              type: object
-      required:
-      - code
-      - message
   securitySchemes:
     applicationPassword:
       type: http
