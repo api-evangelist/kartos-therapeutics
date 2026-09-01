@@ -40,14 +40,14 @@ created: '2026-08-04'
 modified: '2026-08-04'
 tags:
 - Company
-- biotechnology
-- pharmaceuticals
-- oncology
-- hematology
-- rare-disease
-- precision-medicine
-- clinical-trials
-- life-sciences
+- Biotechnology
+- Pharmaceuticals
+- Oncology
+- Hematology
+- Rare Disease
+- Precision Medicine
+- Clinical Trials
+- Life Sciences
 - content-api
 tags_raw:
 - Company
@@ -67,7 +67,7 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://kartosthera.com/wp-json
   tags:
-  - content
+  - Content
   tags_raw:
   - content
   properties:
@@ -167,7 +167,7 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://kartosthera.com/wp-json
   tags:
-  - science
+  - Science
   tags_raw:
   - science
   properties:
