@@ -134,26 +134,6 @@ apis:
     url: conventions/kartos-therapeutics-conventions.yml
   - type: DataModel
     url: data-model/kartos-therapeutics-data-model.yml
-- aid: kartos-therapeutics:kartos-therapeutics-oembed-api
-  name: Kartos Therapeutics Oembed API
-  description: The oEmbed 1.0 provider endpoint for kartosthera.com URLs.
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://kartosthera.com/wp-json
-  tags:
-  - oEmbed
-  tags_raw:
-  - oembed
-  properties:
-  - type: OpenAPI
-    url: openapi/kartos-therapeutics-oembed-api-openapi.yml
-  - type: Authentication
-    url: authentication/kartos-therapeutics-authentication.yml
-  - type: ErrorCatalog
-    url: errors/kartos-therapeutics-problem-types.yml
-  - type: Conventions
-    url: conventions/kartos-therapeutics-conventions.yml
-  - type: DataModel
-    url: data-model/kartos-therapeutics-data-model.yml
 - aid: kartos-therapeutics:kartos-therapeutics-people-api
   name: Kartos Therapeutics People API
   description: The leadership, board and advisor team custom post type.
@@ -206,6 +186,24 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/kartos-therapeutics-taxonomy-api-openapi.yml
+  - type: Authentication
+    url: authentication/kartos-therapeutics-authentication.yml
+  - type: ErrorCatalog
+    url: errors/kartos-therapeutics-problem-types.yml
+  - type: Conventions
+    url: conventions/kartos-therapeutics-conventions.yml
+  - type: DataModel
+    url: data-model/kartos-therapeutics-data-model.yml
+- aid: kartos-therapeutics:kartos-therapeutics-o-embed-api
+  name: Kartos Therapeutics o Embed API
+  description: The oEmbed 1.0 provider endpoint for kartosthera.com URLs.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://kartosthera.com/wp-json
+  tags:
+  - o Embed
+  properties:
+  - type: OpenAPI
+    url: openapi/kartos-therapeutics-o-embed-api-openapi.yml
   - type: Authentication
     url: authentication/kartos-therapeutics-authentication.yml
   - type: ErrorCatalog
