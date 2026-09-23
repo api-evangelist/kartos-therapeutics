@@ -3,13 +3,7 @@ info:
   title: Kartos Therapeutics Content API
   version: '2'
   summary: The anonymously readable WordPress REST content surface behind kartosthera.com.
-  description: 'Kartos Therapeutics publishes no developer program, no developer portal and no API documentation. The only machine-readable API surface reachable on kartosthera.com without credentials is the WordPress REST API the site registers at `/wp-json/`, which is documented upstream by the WordPress REST API Handbook rather than by Kartos Therapeutics.
-
-
-    This document is DERIVED by the API Evangelist enrichment pipeline from the route index the site itself publishes at https://kartosthera.com/wp-json/ (183 routes across the namespaces `oembed/1.0`, `yoast/v1`, `wp/v2`, `wp-site-health/v1`, `wp-block-editor/v1` and `wp-abilities/v1`; generator reported WordPress 7.0.2). ONLY the operations that were verified to return data anonymously on 2026-08-04 are modelled here. Write operations, and the many routes that answer `401 rest_cannot_view` / `rest_forbidden` without credentials, are deliberately excluded — see `x-anonymous-denied` on this object for the observed denials.
-
-
-    The interesting part of this surface is not stock WordPress: Kartos registers two custom post types that carry the company''s actual scientific and corporate record — `presentation` (5 published congress abstracts and posters for navtemadlin, each linked to a PDF in the media library) and `team` (15 leadership, board and advisor bios, each with structured ACF fields for job title, credentials and biography). Both are REST-enabled and anonymously readable. The `posts` collection is registered but empty (`X-WP-Total: 0`) — Kartos authors no blog and no press-release archive as posts.'
+  description: Kartos Therapeutics publishes no developer program, no developer portal and no API documentation.
   contact:
     name: Kartos Therapeutics
     email: info@kartosthera.com
@@ -75,13 +69,13 @@ servers:
   description: Production WordPress REST API for kartosthera.com
 security: []
 tags:
-- name: content
+- name: Content
   description: Published pages and the site-wide search index.
 paths:
   /wp/v2/pages:
     get:
       tags:
-      - content
+      - Content
       operationId: listPages
       summary: List published pages
       description: Returns the 8 published pages of kartosthera.com — Home, Science, Research, Presentations & Publications, Advocacy, About, Contact and Privacy Policy — with rendered title, content and excerpt. Total count is returned in the `X-WP-Total` response header.
@@ -115,7 +109,7 @@ paths:
   /wp/v2/pages/{id}:
     get:
       tags:
-      - content
+      - Content
       operationId: getPage
       summary: Get a page by id
       parameters:
@@ -134,7 +128,7 @@ paths:
   /wp/v2/posts:
     get:
       tags:
-      - content
+      - Content
       operationId: listPosts
       summary: List posts
       description: 'The `posts` collection is registered and anonymously readable but EMPTY — verified `X-WP-Total: 0` on 2026-08-04. Kartos Therapeutics runs no blog and maintains no press-release archive as WordPress posts; its scientific record lives in the `presentation` custom post type instead.'
@@ -158,7 +152,7 @@ paths:
   /wp/v2/search:
     get:
       tags:
-      - content
+      - Content
       operationId: searchContent
       summary: Search across published content
       description: Cross-content search returning lightweight `{id, title, url, type, subtype}` results. A query for `navtemadlin` returned 28 matches across pages and presentations on 2026-08-04.
@@ -201,7 +195,7 @@ paths:
   /wp/v2/comments:
     get:
       tags:
-      - content
+      - Content
       operationId: listComments
       summary: List comments
       description: 'Comments are enabled at the route level but the collection is empty (`X-WP-Total: 0`).'
@@ -221,11 +215,131 @@ paths:
                 items:
                   type: object
 components:
+  parameters:
+    OrderBy:
+      name: orderby
+      in: query
+      description: Sort collection by object attribute.
+      schema:
+        type: string
+        enum:
+        - author
+        - date
+        - id
+        - include
+        - modified
+        - parent
+        - relevance
+        - slug
+        - title
+        default: date
+    PerPage:
+      name: per_page
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 100
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier for the object.
+      schema:
+        type: integer
+    Page:
+      name: page
+      in: query
+      description: Current page of the collection (1-based).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    Search:
+      name: search
+      in: query
+      description: Limit results to those matching a string.
+      schema:
+        type: string
+    Slug:
+      name: slug
+      in: query
+      description: Limit results to one or more specific slugs.
+      schema:
+        type: array
+        items:
+          type: string
+    Context:
+      name: context
+      in: query
+      description: Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` requires authentication.
+      schema:
+        type: string
+        enum:
+        - view
+        - embed
+        - edit
+        default: view
+    Fields:
+      name: _fields
+      in: query
+      description: Comma-separated list of fields to include in the response (sparse fieldsets).
+      schema:
+        type: string
+      example: id,slug,title,link
+    Order:
+      name: order
+      in: query
+      description: Sort ascending or descending.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
+  headers:
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+    Link:
+      description: RFC 8288 pagination links (`rel="next"` / `rel="prev"`).
+      schema:
+        type: string
+    XWPTotalPages:
+      description: Total number of pages available.
+      schema:
+        type: integer
   schemas:
     Links:
       type: object
       description: HAL-style `_links` hypermedia block present on every object.
       additionalProperties: true
+    SearchResult:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+        subtype:
+          type: string
+        _links:
+          $ref: '#/components/schemas/Links'
+    Rendered:
+      type: object
+      properties:
+        rendered:
+          type: string
+        protected:
+          type: boolean
     Post:
       type: object
       properties:
@@ -260,29 +374,6 @@ components:
           type: integer
         _links:
           $ref: '#/components/schemas/Links'
-    SearchResult:
-      type: object
-      properties:
-        id:
-          type: integer
-        title:
-          type: string
-        url:
-          type: string
-          format: uri
-        type:
-          type: string
-        subtype:
-          type: string
-        _links:
-          $ref: '#/components/schemas/Links'
-    Rendered:
-      type: object
-      properties:
-        rendered:
-          type: string
-        protected:
-          type: boolean
     Page:
       allOf:
       - $ref: '#/components/schemas/Post'
@@ -316,103 +407,6 @@ components:
       required:
       - code
       - message
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      description: Unique identifier for the object.
-      schema:
-        type: integer
-    Page:
-      name: page
-      in: query
-      description: Current page of the collection (1-based).
-      schema:
-        type: integer
-        default: 1
-        minimum: 1
-    OrderBy:
-      name: orderby
-      in: query
-      description: Sort collection by object attribute.
-      schema:
-        type: string
-        enum:
-        - author
-        - date
-        - id
-        - include
-        - modified
-        - parent
-        - relevance
-        - slug
-        - title
-        default: date
-    PerPage:
-      name: per_page
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 100
-    Context:
-      name: context
-      in: query
-      description: Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` requires authentication.
-      schema:
-        type: string
-        enum:
-        - view
-        - embed
-        - edit
-        default: view
-    Fields:
-      name: _fields
-      in: query
-      description: Comma-separated list of fields to include in the response (sparse fieldsets).
-      schema:
-        type: string
-      example: id,slug,title,link
-    Slug:
-      name: slug
-      in: query
-      description: Limit results to one or more specific slugs.
-      schema:
-        type: array
-        items:
-          type: string
-    Search:
-      name: search
-      in: query
-      description: Limit results to those matching a string.
-      schema:
-        type: string
-    Order:
-      name: order
-      in: query
-      description: Sort ascending or descending.
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-        default: desc
-  headers:
-    Link:
-      description: RFC 8288 pagination links (`rel="next"` / `rel="prev"`).
-      schema:
-        type: string
-    XWPTotal:
-      description: Total number of items in the collection.
-      schema:
-        type: integer
-    XWPTotalPages:
-      description: Total number of pages available.
-      schema:
-        type: integer
   responses:
     NotFound:
       description: No object found with that identifier.

@@ -3,13 +3,7 @@ info:
   title: Kartos Therapeutics Content People API
   version: '2'
   summary: The anonymously readable WordPress REST content surface behind kartosthera.com.
-  description: 'Kartos Therapeutics publishes no developer program, no developer portal and no API documentation. The only machine-readable API surface reachable on kartosthera.com without credentials is the WordPress REST API the site registers at `/wp-json/`, which is documented upstream by the WordPress REST API Handbook rather than by Kartos Therapeutics.
-
-
-    This document is DERIVED by the API Evangelist enrichment pipeline from the route index the site itself publishes at https://kartosthera.com/wp-json/ (183 routes across the namespaces `oembed/1.0`, `yoast/v1`, `wp/v2`, `wp-site-health/v1`, `wp-block-editor/v1` and `wp-abilities/v1`; generator reported WordPress 7.0.2). ONLY the operations that were verified to return data anonymously on 2026-08-04 are modelled here. Write operations, and the many routes that answer `401 rest_cannot_view` / `rest_forbidden` without credentials, are deliberately excluded — see `x-anonymous-denied` on this object for the observed denials.
-
-
-    The interesting part of this surface is not stock WordPress: Kartos registers two custom post types that carry the company''s actual scientific and corporate record — `presentation` (5 published congress abstracts and posters for navtemadlin, each linked to a PDF in the media library) and `team` (15 leadership, board and advisor bios, each with structured ACF fields for job title, credentials and biography). Both are REST-enabled and anonymously readable. The `posts` collection is registered but empty (`X-WP-Total: 0`) — Kartos authors no blog and no press-release archive as posts.'
+  description: Kartos Therapeutics publishes no developer program, no developer portal and no API documentation.
   contact:
     name: Kartos Therapeutics
     email: info@kartosthera.com
@@ -75,13 +69,13 @@ servers:
   description: Production WordPress REST API for kartosthera.com
 security: []
 tags:
-- name: people
+- name: People
   description: The leadership, board and advisor team custom post type.
 paths:
   /wp/v2/team:
     get:
       tags:
-      - people
+      - People
       operationId: listTeamMembers
       summary: List leadership, board and advisor bios
       description: 'Returns the `team` custom post type — 15 records covering the executive team (CEO, CMO, CSO, COO and SVPs), the board of directors and the scientific/business advisors. Each record carries structured Advanced Custom Fields: `team-job-title`, `team-credentials` and `team-bio`.'
@@ -112,7 +106,7 @@ paths:
   /wp/v2/team/{id}:
     get:
       tags:
-      - people
+      - People
       operationId: getTeamMember
       summary: Get a team member by id
       parameters:
@@ -130,7 +124,7 @@ paths:
   /wp/v2/users:
     get:
       tags:
-      - people
+      - People
       operationId: listUsers
       summary: List public authors
       description: Returns the single public author record on the site (`admin`). Kartos does not attribute content to named individuals through WordPress users; named people are modelled in the `team` custom post type instead.
@@ -151,6 +145,79 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
 components:
+  parameters:
+    Fields:
+      name: _fields
+      in: query
+      description: Comma-separated list of fields to include in the response (sparse fieldsets).
+      schema:
+        type: string
+      example: id,slug,title,link
+    PerPage:
+      name: per_page
+      in: query
+      description: Maximum number of items to return per page.
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 100
+    OrderBy:
+      name: orderby
+      in: query
+      description: Sort collection by object attribute.
+      schema:
+        type: string
+        enum:
+        - author
+        - date
+        - id
+        - include
+        - modified
+        - parent
+        - relevance
+        - slug
+        - title
+        default: date
+    Order:
+      name: order
+      in: query
+      description: Sort ascending or descending.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
+    Id:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier for the object.
+      schema:
+        type: integer
+    Page:
+      name: page
+      in: query
+      description: Current page of the collection (1-based).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    Search:
+      name: search
+      in: query
+      description: Limit results to those matching a string.
+      schema:
+        type: string
+    Slug:
+      name: slug
+      in: query
+      description: Limit results to one or more specific slugs.
+      schema:
+        type: array
+        items:
+          type: string
   schemas:
     User:
       type: object
@@ -214,10 +281,6 @@ components:
               description: Biography, as HTML.
         _links:
           $ref: '#/components/schemas/Links'
-    Links:
-      type: object
-      description: HAL-style `_links` hypermedia block present on every object.
-      additionalProperties: true
     Error:
       type: object
       description: The WordPress REST error envelope. NOT RFC 9457 — the media type is `application/json` and the shape is `{code, message, data:{status}}`.
@@ -247,88 +310,19 @@ components:
           type: string
         protected:
           type: boolean
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      description: Unique identifier for the object.
-      schema:
-        type: integer
-    Page:
-      name: page
-      in: query
-      description: Current page of the collection (1-based).
-      schema:
-        type: integer
-        default: 1
-        minimum: 1
-    Fields:
-      name: _fields
-      in: query
-      description: Comma-separated list of fields to include in the response (sparse fieldsets).
-      schema:
-        type: string
-      example: id,slug,title,link
-    Slug:
-      name: slug
-      in: query
-      description: Limit results to one or more specific slugs.
-      schema:
-        type: array
-        items:
-          type: string
-    PerPage:
-      name: per_page
-      in: query
-      description: Maximum number of items to return per page.
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 100
-    OrderBy:
-      name: orderby
-      in: query
-      description: Sort collection by object attribute.
-      schema:
-        type: string
-        enum:
-        - author
-        - date
-        - id
-        - include
-        - modified
-        - parent
-        - relevance
-        - slug
-        - title
-        default: date
-    Search:
-      name: search
-      in: query
-      description: Limit results to those matching a string.
-      schema:
-        type: string
-    Order:
-      name: order
-      in: query
-      description: Sort ascending or descending.
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-        default: desc
+    Links:
+      type: object
+      description: HAL-style `_links` hypermedia block present on every object.
+      additionalProperties: true
   responses:
-    NotFound:
-      description: No object found with that identifier.
+    BadRequest:
+      description: Invalid parameter.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid parameter.
+    NotFound:
+      description: No object found with that identifier.
       content:
         application/json:
           schema:

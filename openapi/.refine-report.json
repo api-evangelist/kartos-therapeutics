@@ -1,13 +1,7 @@
 {
   "provider": "kartos-therapeutics",
   "sources": [
-    "kartos-therapeutics-content-api-openapi.yml",
-    "kartos-therapeutics-discovery-api-openapi.yml",
-    "kartos-therapeutics-media-api-openapi.yml",
-    "kartos-therapeutics-oembed-api-openapi.yml",
-    "kartos-therapeutics-people-api-openapi.yml",
-    "kartos-therapeutics-science-api-openapi.yml",
-    "kartos-therapeutics-taxonomy-api-openapi.yml"
+    "_ae-authored/kartos-therapeutics-content-openapi.yml"
   ],
   "outputs": [
     "kartos-therapeutics-content-api-openapi.yml",
@@ -18,11 +12,24 @@
     "kartos-therapeutics-science-api-openapi.yml",
     "kartos-therapeutics-taxonomy-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
-    "apis.yml register: already-registered"
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "kartos-therapeutics-content-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: kartos-therapeutics-o-embed-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 7 total)"
   ],
-  "skipped": []
+  "skipped": [
+    "kartos-therapeutics-content-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kartos-therapeutics-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kartos-therapeutics-media-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kartos-therapeutics-o-embed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kartos-therapeutics-people-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kartos-therapeutics-science-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kartos-therapeutics-taxonomy-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

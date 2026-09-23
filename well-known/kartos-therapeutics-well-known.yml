@@ -2,36 +2,13 @@ generated: '2026-08-04'
 method: probed
 source: live HTTPS probes of the kartosthera.com hosts on 2026-08-04
 host: https://kartosthera.com
-note: >-
-  Every RFC 8615 well-known discovery path was probed on both the apex (kartosthera.com) and the
-  www host, following redirects. All returned 404 from the origin nginx. Kartos Therapeutics
-  publishes no security.txt, no OpenID Connect or OAuth authorization-server metadata, no
-  RFC 9727 api-catalog and no ai-plugin manifest. The site's own machine-readable discovery
-  document is instead the WordPress REST route index at /wp-json/, which returns 200 and is
-  advertised by a `Link: <https://kartosthera.com/wp-json/>; rel="https://api.w.org/"` header on
-  every response. Note that /robots.txt also returns 404, so the site publishes no crawler or
-  agent policy of any kind.
-documents:
-- path: /.well-known/security.txt
-  status: 404
-- path: /.well-known/openid-configuration
-  status: 404
-- path: /.well-known/oauth-authorization-server
-  status: 404
-- path: /.well-known/api-catalog
-  status: 404
-- path: /.well-known/ai-plugin.json
-  status: 404
-- path: /.well-known/agent-card.json
-  status: 404
-- path: /.well-known/agent.json
-  status: 404
-- path: /.well-known/dnt-policy.txt
-  status: 404
-- path: /robots.txt
-  status: 404
-- path: /llms.txt
-  status: 404
+note: 'Every RFC 8615 well-known discovery path was probed on both the apex (kartosthera.com) and the
+  www host, following redirects. All returned 404 from the origin nginx. Kartos Therapeutics publishes
+  no security.txt, no OpenID Connect or OAuth authorization-server metadata, no RFC 9727 api-catalog and
+  no ai-plugin manifest. The site''s own machine-readable discovery document is instead the WordPress
+  REST route index at /wp-json/, which returns 200 and is advertised by a `Link: <https://kartosthera.com/wp-json/>;
+  rel="https://api.w.org/"` header on every response. Note that /robots.txt also returns 404, so the site
+  publishes no crawler or agent policy of any kind.'
 alternate_discovery:
 - path: /wp-json/
   status: 200
@@ -51,3 +28,27 @@ x-evidence:
   hosts_probed:
   - kartosthera.com
   - www.kartosthera.com
+hosts:
+- host: https://kartosthera.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/dnt-policy.txt
+    status: 404
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.
