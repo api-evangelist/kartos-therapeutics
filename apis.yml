@@ -74,146 +74,20 @@ tags_raw:
 - life-sciences
 - content-api
 apis:
-- aid: kartos-therapeutics:kartos-therapeutics-content-api
-  name: Kartos Therapeutics Content API
-  description: Published pages and the site-wide search index.
-  humanURL: https://developer.wordpress.org/rest-api/
+- aid: kartos-therapeutics:kartosthera-com-website-wordpress-rest
+  name: Kartos Therapeutics Website (WordPress REST)
+  description: 'The public WordPress REST API (wp-json) of the Kartos Therapeutics website at kartosthera.com:
+    the route index of the site''s content management system, catalogued as one site surface rather than
+    as separate APIs.'
   baseURL: https://kartosthera.com/wp-json
   tags:
-  - Content
-  tags_raw:
-  - content
+  - WordPress
+  x-surface: platform-generated
   properties:
-  - type: OpenAPI
-    url: openapi/kartos-therapeutics-content-api-openapi.yml
-  - type: Authentication
-    url: authentication/kartos-therapeutics-authentication.yml
-  - type: ErrorCatalog
-    url: errors/kartos-therapeutics-problem-types.yml
-  - type: Conventions
-    url: conventions/kartos-therapeutics-conventions.yml
-  - type: DataModel
-    url: data-model/kartos-therapeutics-data-model.yml
-- aid: kartos-therapeutics:kartos-therapeutics-discovery-api
-  name: Kartos Therapeutics Discovery API
-  description: The route index and namespace descriptors the site publishes about itself.
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://kartosthera.com/wp-json
-  tags:
-  - Discovery
-  tags_raw:
-  - discovery
-  properties:
-  - type: OpenAPI
-    url: openapi/kartos-therapeutics-discovery-api-openapi.yml
-  - type: Authentication
-    url: authentication/kartos-therapeutics-authentication.yml
-  - type: ErrorCatalog
-    url: errors/kartos-therapeutics-problem-types.yml
-  - type: Conventions
-    url: conventions/kartos-therapeutics-conventions.yml
-  - type: DataModel
-    url: data-model/kartos-therapeutics-data-model.yml
-- aid: kartos-therapeutics:kartos-therapeutics-media-api
-  name: Kartos Therapeutics Media API
-  description: The media library — scientific figures, investor logos and presentation PDFs.
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://kartosthera.com/wp-json
-  tags:
-  - Media
-  tags_raw:
-  - media
-  properties:
-  - type: OpenAPI
-    url: openapi/kartos-therapeutics-media-api-openapi.yml
-  - type: Authentication
-    url: authentication/kartos-therapeutics-authentication.yml
-  - type: ErrorCatalog
-    url: errors/kartos-therapeutics-problem-types.yml
-  - type: Conventions
-    url: conventions/kartos-therapeutics-conventions.yml
-  - type: DataModel
-    url: data-model/kartos-therapeutics-data-model.yml
-- aid: kartos-therapeutics:kartos-therapeutics-people-api
-  name: Kartos Therapeutics People API
-  description: The leadership, board and advisor team custom post type.
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://kartosthera.com/wp-json
-  tags:
-  - People
-  tags_raw:
-  - people
-  properties:
-  - type: OpenAPI
-    url: openapi/kartos-therapeutics-people-api-openapi.yml
-  - type: Authentication
-    url: authentication/kartos-therapeutics-authentication.yml
-  - type: ErrorCatalog
-    url: errors/kartos-therapeutics-problem-types.yml
-  - type: Conventions
-    url: conventions/kartos-therapeutics-conventions.yml
-  - type: DataModel
-    url: data-model/kartos-therapeutics-data-model.yml
-- aid: kartos-therapeutics:kartos-therapeutics-science-api
-  name: Kartos Therapeutics Science API
-  description: The navtemadlin congress presentations and publications custom post type.
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://kartosthera.com/wp-json
-  tags:
-  - Science
-  tags_raw:
-  - science
-  properties:
-  - type: OpenAPI
-    url: openapi/kartos-therapeutics-science-api-openapi.yml
-  - type: Authentication
-    url: authentication/kartos-therapeutics-authentication.yml
-  - type: ErrorCatalog
-    url: errors/kartos-therapeutics-problem-types.yml
-  - type: Conventions
-    url: conventions/kartos-therapeutics-conventions.yml
-  - type: DataModel
-    url: data-model/kartos-therapeutics-data-model.yml
-- aid: kartos-therapeutics:kartos-therapeutics-taxonomy-api
-  name: Kartos Therapeutics Taxonomy API
-  description: Registered post types, statuses, taxonomies and terms.
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://kartosthera.com/wp-json
-  tags:
-  - Taxonomy
-  tags_raw:
-  - taxonomy
-  properties:
-  - type: OpenAPI
-    url: openapi/kartos-therapeutics-taxonomy-api-openapi.yml
-  - type: Authentication
-    url: authentication/kartos-therapeutics-authentication.yml
-  - type: ErrorCatalog
-    url: errors/kartos-therapeutics-problem-types.yml
-  - type: Conventions
-    url: conventions/kartos-therapeutics-conventions.yml
-  - type: DataModel
-    url: data-model/kartos-therapeutics-data-model.yml
-- aid: kartos-therapeutics:kartos-therapeutics-o-embed-api
-  name: Kartos Therapeutics o Embed API
-  description: The oEmbed 1.0 provider endpoint for kartosthera.com URLs.
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://kartosthera.com/wp-json
-  tags:
-  - oEmbed
-  tags_raw:
-  - o Embed
-  properties:
-  - type: OpenAPI
-    url: openapi/kartos-therapeutics-o-embed-api-openapi.yml
-  - type: Authentication
-    url: authentication/kartos-therapeutics-authentication.yml
-  - type: ErrorCatalog
-    url: errors/kartos-therapeutics-problem-types.yml
-  - type: Conventions
-    url: conventions/kartos-therapeutics-conventions.yml
-  - type: DataModel
-    url: data-model/kartos-therapeutics-data-model.yml
+  - type: Documentation
+    url: https://kartosthera.com/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
