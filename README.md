@@ -64,40 +64,104 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kartos Therapeutics, Inc. is a privately held, clinical-stage biopharmaceutical company in Redwood
-City, California, developing navtemadlin (KRT-232), an oral MDM2 inhibitor that restores p53
-activity in tumours retaining wild-type TP53. Founded in 2016 by Wayne Rothbaum around an MDM2
-asset in-licensed from Amgen, its lead programme is in myelofibrosis — the Phase 3 POIESIS trial
-(NCT06479135), the Phase 1b/2 KRT-232-109 combination study (NCT04485260) and the Phase 3 BOREAS
-study (NCT03662126) — with reported activity also in acute myeloid leukaemia and Merkel cell
-carcinoma.
+Kartos Therapeutics, Inc. is a privately held, clinical-stage biopharmaceutical company headquartered at 275 Shoreline Drive, Redwood City, California, developing navtemadlin (KRT-232), an orally administered, potent and selective small-molecule inhibitor of MDM2. The company was founded in 2016 by Wayne Rothbaum, president of Quogue Capital and co-founder of Acerta Pharma, around an MDM2 inhibitor in-licensed from Amgen. Navtemadlin blocks the MDM2 protein that suppresses p53, restoring p53 function in tumours that retain wild-type TP53 and driving cell-cycle arrest through p21 and apoptosis through pro-apoptotic Bcl-2 family proteins. The clinical programme is centred on myelofibrosis and includes the enrolling global Phase 3 POIESIS trial of navtemadlin added to ruxolitinib (NCT06479135), the Phase 1b/2 KRT-232-109 combination study (NCT04485260), and the completed Phase 3 BOREAS study of navtemadlin versus best available therapy in JAK-inhibitor relapsed or refractory myelofibrosis (NCT03662126), with reported activity also in acute myeloid leukaemia and Merkel cell carcinoma. Kartos is led by CEO Jesse McGreivy, MD, with Srdan Verstovsek, MD, PhD as chief medical officer, and is backed by Quogue Capital, OrbiMed Advisors, Amgen, SR One, Fidelity, BlackRock, T. Rowe Price, Invus and Soleus Capital. Kartos Therapeutics runs no developer program and publishes no product API, no developer portal and no API documentation; the only machine-readable surface reachable without credentials is the WordPress REST content API behind kartosthera.com, catalogued here.
 
-## API surface
+**Areas:** Company · Biotechnology · Pharmaceuticals · Oncology · Hematology · Rare Disease · Precision Medicine · Clinical Trials · Life Sciences · content-api
 
-**Kartos Therapeutics runs no developer program.** There is no developer portal, no API
-documentation, no API reference, no SDK, no CLI, no MCP server, no agent card and no webhook or
-event surface. Every `/.well-known/` path returns 404, as do `/robots.txt` and `/llms.txt`.
+## Kartos Therapeutics on APIs.io
 
-The one machine-readable surface reachable without credentials is the **WordPress REST API** the
-site registers at [`https://kartosthera.com/wp-json`](https://kartosthera.com/wp-json) and
-advertises on every page response via the `api.w.org` `Link` header. It is catalogued here as the
-*Kartos Therapeutics Content API*. Beyond stock WordPress, it exposes two Kartos-registered custom
-post types that carry the company's real record:
+Everything profiled for Kartos Therapeutics is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kartos-therapeutics/](https://apis.io/providers/kartos-therapeutics/)** — or go straight to one of the APIs or properties below.
 
-- `presentation` — 5 navtemadlin congress abstracts and posters, including the POIESIS Phase 3
-  study design and the BOREAS Phase 3 results, each linked to a PDF in the media library.
-- `team` — 15 executive, board and advisor records with structured job-title, credentials and
-  biography fields.
+### APIs (1)
 
-The `posts` collection is registered but empty: Kartos publishes no blog and no press-release
-archive. The OpenAPI in this repo is **derived** by API Evangelist from the route index the site
-publishes, and models only the 21 operations verified to return data anonymously on 2026-08-04.
-It is not a specification Kartos Therapeutics publishes.
+- [Kartos Therapeutics Website (WordPress REST)](https://apis.io/apis/kartos-therapeutics/kartosthera-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Kartos Therapeutics website at kartosthera.com: the route index of the site's content management system,…
 
-## Links
+### Published properties
 
-- Website — https://kartosthera.com/
-- Science — https://kartosthera.com/science/
-- Research and clinical trials — https://kartosthera.com/research/
-- Presentations and publications — https://kartosthera.com/presentations/
-- Secondary-market listing — https://forgeglobal.com/kartos-therapeutics_stock/
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [Moved to /providers/kartos-therapeutics/](https://apis.io/collections/kartos-therapeutics/open-kartos-therapeutics-content-api/)
+- [Moved to /providers/kartos-therapeutics/](https://apis.io/collections/kartos-therapeutics/open-kartos-therapeutics-discovery-api/)
+- [Moved to /providers/kartos-therapeutics/](https://apis.io/collections/kartos-therapeutics/open-kartos-therapeutics-media-api/)
+- [Moved to /providers/kartos-therapeutics/](https://apis.io/collections/kartos-therapeutics/open-kartos-therapeutics-oembed-api/)
+- [Moved to /providers/kartos-therapeutics/](https://apis.io/collections/kartos-therapeutics/open-kartos-therapeutics-people-api/)
+- [Moved to /providers/kartos-therapeutics/](https://apis.io/collections/kartos-therapeutics/open-kartos-therapeutics-science-api/)
+- [Moved to /providers/kartos-therapeutics/](https://apis.io/collections/kartos-therapeutics/open-kartos-therapeutics-taxonomy-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Kartos Therapeutics Content Overlay](https://apis.io/overlays/kartos-therapeutics/kartos-therapeutics-content-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Kartos Therapeutics Authentication](https://apis.io/security/kartos-therapeutics/kartos-therapeutics-authentication/)
+- [Kartos Therapeutics Domain Security](https://apis.io/security/kartos-therapeutics/kartos-therapeutics-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://kartosthera.com/)
+- [Support](https://kartosthera.com/contact/)
+- [Privacy policy](https://kartosthera.com/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 15.0** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 1.7 |
+| Contract governance | 4.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 28.0 |
+| Access clarity | 10.5 |
+
+**Agent readiness 4.1** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.4** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kartos-therapeutics/](https://apis.io/providers/kartos-therapeutics/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Kartos Therapeutics: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kartos-therapeutics/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
